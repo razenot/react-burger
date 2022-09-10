@@ -1,0 +1,45 @@
+.elementsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.scrollable {
+    composes: elementsWrapper;
+    height: 464px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+}
+
+.elementContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+}
+
+.ingredient {
+    margin-left: 32px;
+    display: flex;
+    width: 100%;
+}
+
+.dragImg {
+    position: absolute;
+}
+
+.currencyIcon svg {
+    width: 33px;
+    height: 33px;
+}
+
+.orderInfo {
+    margin-right: 10px;
+}
+
+.orderSend {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}

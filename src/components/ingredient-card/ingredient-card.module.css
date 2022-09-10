@@ -1,0 +1,19 @@
+.wrapper {
+    text-align: center;
+    width: 272px;
+    position: relative;
+    margin-left: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    height: 48px;
+    overflow: hidden;
+}

@@ -1,0 +1,6 @@
+.container {
+    display: flex;
+    flex-flow: wrap;
+    margin-left: -12px;
+    margin-right: -12px;
+}

@@ -1,0 +1,12 @@
+.groupList  {
+    padding: 0;
+    height: 716px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+}
+
+.ingredientsGroup {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

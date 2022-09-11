@@ -5,7 +5,6 @@ import BurgerConstructor from './components/burger-constructor/burger-constructo
 import globalStyles from './global.module.css';
 
 
-
 function App() {
 
 	const [data, setData] = useState([]);

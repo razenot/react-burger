@@ -32,6 +32,7 @@
 .currencyIcon svg {
     width: 33px;
     height: 33px;
+    vertical-align: middle;
 }
 
 .orderInfo {

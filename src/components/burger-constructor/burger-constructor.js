@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
 import OrderDetails from './../order-details/order-details';
+import PropTypes from 'prop-types';
 
 function BurgerConstructor({data}) {
 
@@ -75,7 +76,7 @@ function BurgerConstructor({data}) {
                     </Button>
                 </div>
 
-                <OrderDetails isOpen={visibleOrderDetail} handleClose={handleCloseOrderDetail} />
+                {visibleOrderDetail && <OrderDetails isOpen={visibleOrderDetail} handleClose={handleCloseOrderDetail} />}
             </>
             :
                 <p className='text text_type_main-default'>Загрузка...</p>
@@ -84,5 +85,25 @@ function BurgerConstructor({data}) {
 		</div>
 	);
 }
+
+const ingredientData = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    calories: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+});
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(
+    ingredientData.isRequired
+    ),
+}; 
 
 export default BurgerConstructor;

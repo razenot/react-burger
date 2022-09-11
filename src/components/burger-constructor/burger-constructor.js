@@ -38,7 +38,7 @@ function BurgerConstructor({data}) {
                     <div className={`${styles.scrollable} custom-scroll pl-4 pr-4`}>
                         {data.map((item, index) => (
                             (index !== 0 && index !== 1) &&
-                            (<div className={styles.elementContainer} key={index} >
+                            (<div className={styles.elementContainer} key={item._id} >
                                 <div className={styles.dragImg}>
                                     <DragIcon type="primary" />
                                 </div>
@@ -76,7 +76,7 @@ function BurgerConstructor({data}) {
                     </Button>
                 </div>
 
-                {visibleOrderDetail && <OrderDetails isOpen={visibleOrderDetail} handleClose={handleCloseOrderDetail} />}
+                {visibleOrderDetail && <OrderDetails handleClose={handleCloseOrderDetail} />}
             </>
             :
                 <p className='text text_type_main-default'>Загрузка...</p>

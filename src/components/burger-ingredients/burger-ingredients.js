@@ -22,7 +22,7 @@ function BurgerIngredients({data}) {
 	},[]);
 
 	function getStructIngredients(){
-		let result = {
+		const result = {
 			buns: [],
 			sauces: [],
 			mains: []
@@ -40,7 +40,7 @@ function BurgerIngredients({data}) {
 
 	return (
 		<div className='mr-5'>
-			<div style={{ display: 'flex' }}>
+			<div className={styles.tabs}>
 				<Tab value="bun" active={current === "bun"} onClick={(val) => setCurrent(val)}>
 					Булки
 				</Tab>

@@ -7,7 +7,7 @@ function OrderDetails (props) {
  
     return (
         <div className={styles.overflow}>
-            <Modal isOpen={props.isOpen} handleClose={props.handleClose}>
+            <Modal handleClose={props.handleClose}>
                 <div className={`${styles.body} mt-20 mb-15 ml-15 mr-15`}>
                     <p className={`${styles.orderId} text text_type_digits-large`}>034536</p>
                     <p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
@@ -22,7 +22,6 @@ function OrderDetails (props) {
 }
 
 OrderDetails.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
     handleClose: PropTypes.func,
 }; 
 

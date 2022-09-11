@@ -8,23 +8,23 @@ function AppHeader() {
 		<div className={`${globalStyles.container} ${globalStyles.blackGrayBG}`}>
 			<header className={styles.header}>
 				<section className={styles.columnLeft}>
-					<div className={styles.button}>
+					<a href="#" className={styles.link}>
 						<BurgerIcon type="primary" />
 						<span className='text text_type_main-default ml-2'>Конструктор</span>
-					</div>
-					<div className={`${styles.button} ml-2`}>
+					</a>
+					<a href="#" className={`${styles.link} ml-2`}>
 						<ListIcon type="secondary" />
 						<span className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</span>
-					</div>
+					</a>
 				</section>
 				<section className={styles.columnCenter}>
 					<Logo />
 				</section>
 				<section className={styles.columnRight}>
-					<div className={styles.button}>
+					<a href="#" className={styles.link}>
 						<ProfileIcon type="secondary" />
 						<span className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</span>
-					</div>
+					</a>
 				</section>
 			</header>
 		</div>

@@ -24,7 +24,7 @@ function Modal (props) {
 
 
     return (
-        props.isOpen && ReactDOM.createPortal(
+        ReactDOM.createPortal(
             <div className={styles.root}>
                 <ModalOverlay handleClose={props.handleClose} />
                 <div className={styles.content}>
@@ -41,7 +41,6 @@ function Modal (props) {
 }
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool,
     handleClose: PropTypes.func,
     title: PropTypes.string,
     children: PropTypes.object

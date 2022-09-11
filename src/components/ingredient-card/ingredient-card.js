@@ -32,7 +32,7 @@ function IngredientCard({ingredient}) {
             </div>
             <div className={styles.name + ' text text_type_main-default mt-1'}>{ingredient.name}</div>
         </div>
-        {visibleIngredintDetail && <IngredientDetails isOpen={visibleIngredintDetail} handleClose={handleCloseIngredintDetail} data={ingredient} />}
+        {visibleIngredintDetail && <IngredientDetails handleClose={handleCloseIngredintDetail} data={ingredient} />}
         </>
 	);
 }

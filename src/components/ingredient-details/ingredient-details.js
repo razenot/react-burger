@@ -6,7 +6,7 @@ function IngredientDetails (props) {
 
     return (
         <div className={styles.overflow}>
-            <Modal title='Детали ингредиента' isOpen={props.isOpen} handleClose={props.handleClose}>
+            <Modal title='Детали ингредиента' handleClose={props.handleClose}>
                 <div className={`${styles.body} pl-15 pr-15`}>
                     <div className='pl-4 pr-4'>
                         <img src={props.data.image_large} alt={props.data.name} />
@@ -49,7 +49,6 @@ const ingredientData = PropTypes.shape({
 
 IngredientDetails.propTypes = {
     handleClose: PropTypes.func,
-    isOpen: PropTypes.bool,
     data: ingredientData.isRequired
 }; 
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import AppHeader from './components/app-header/app-header';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
-import globalStyles from './global.module.css';
+import AppHeader from './../app-header/app-header';
+import BurgerIngredients from './../burger-ingredients/burger-ingredients';
+import BurgerConstructor from './../burger-constructor/burger-constructor';
+import globalStyles from './../../global.module.css';
 
 
 function App() {

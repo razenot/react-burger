@@ -2,7 +2,7 @@
     display: flex;
 }
 
-.groupList  {
+.groupList {
     padding: 0;
     height: 716px;
     overflow-y: overlay;

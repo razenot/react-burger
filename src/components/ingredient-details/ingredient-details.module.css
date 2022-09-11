@@ -13,7 +13,7 @@
     padding: 0;
 }
 
-.nutrition li{
+.nutrition li {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,5 +25,5 @@
 }
 
 .nutrition li span:last-child {
-    font-size: 28px!important;
+    font-size: 28px !important;
 }

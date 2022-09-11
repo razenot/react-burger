@@ -1,27 +1,29 @@
 .headerWrapper {
-    composes: blackGrayBG from "./../../global.module.css";
-    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    composes: blackGrayBG from './../../global.module.css';
+    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
+        0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+        0px 0px 1px rgba(0, 0, 0, 0.04);
 }
 
 .header {
-    composes: row from "./../../global.module.css";
+    composes: row from './../../global.module.css';
     padding: 16px 0;
     margin-left: -20px;
     margin-right: -20px;
 }
 
-.columnLeft{
-    composes: column4 from "./../../global.module.css";
+.columnLeft {
+    composes: column4 from './../../global.module.css';
     justify-content: start;
 }
 
 .columnCenter {
-    composes: column4 from "./../../global.module.css";
+    composes: column4 from './../../global.module.css';
     justify-content: center;
 }
 
 .columnRight {
-    composes: column4 from "./../../global.module.css";
+    composes: column4 from './../../global.module.css';
     justify-content: end;
 }
 

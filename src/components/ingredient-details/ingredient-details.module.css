@@ -1,0 +1,29 @@
+.overflow {
+    overflow: hidden;
+}
+
+.body {
+    text-align: center;
+    max-width: 520px;
+}
+
+.nutrition {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.nutrition li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+.nutrition li:first-child {
+    padding-left: 0;
+}
+
+.nutrition li span:last-child {
+    font-size: 28px !important;
+}

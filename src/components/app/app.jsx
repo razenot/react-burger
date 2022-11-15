@@ -3,31 +3,20 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import globalStyles from './../../global.module.css';
+import { getIngredients } from './../../services/utils/burger-api';
 
 function App() {
     const [data, setData] = useState([]);
     const [errorData, setErrorData] = useState(false);
-    const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
 
     useEffect(() => {
-        getIngredients();
-    }, []);
-
-    const checkReponse = (res) => {
-        return res.ok
-            ? res.json()
-            : res.json().then((err) => Promise.reject(err));
-    };
-
-    function getIngredients() {
-        fetch(`${BURGER_API_URL}/ingredients`)
-            .then(checkReponse)
-            .then((resData) => setData(resData.data))
+        getIngredients()
+            .then(setData)
             .catch((e) => {
                 setErrorData(true);
                 alert(`Ошибка загрузки данных (${e}). Перезагрузите страницу.`);
             });
-    }
+    }, []);
 
     return (
         <div>

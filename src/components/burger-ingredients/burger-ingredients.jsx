@@ -1,12 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from './../../services/actions/ingredients';
 
 function BurgerIngredients({ data }) {
+    const dispatch = useDispatch();
+
+    const ingredientsData = useSelector(
+        (state) => state.ingredientsReducer.ingredients
+    );
+
+    useEffect(() => {
+        dispatch(getIngredients());
+    }, [dispatch]); //TODO: узнать зачем нужен dispatch
+
     const [current, setCurrent] = useState('bun');
     const [ingredients, setIngredients] = useState({
+        // убрать
         buns: [],
         sauces: [],
         mains: [],
@@ -17,16 +30,17 @@ function BurgerIngredients({ data }) {
 
     useEffect(() => {
         getStructIngredients();
-    }, []);
+    }, [ingredientsData]);
 
-    function getStructIngredients() {
+    const getStructIngredients = useCallback(() => {
+        // заменить на обычные переменные с использованием memo
         const result = {
             buns: [],
             sauces: [],
             mains: [],
         };
 
-        data.forEach((item) => {
+        ingredientsData.forEach((item) => {
             item.count = Math.floor(Math.random() * 3); // temp for visual
             if (item.type === 'bun') result.buns.push(item);
             if (item.type === 'sauce') result.sauces.push(item);
@@ -34,7 +48,7 @@ function BurgerIngredients({ data }) {
         });
 
         setIngredients(result);
-    }
+    }, [ingredientsData]);
 
     return (
         <div className='mr-5'>

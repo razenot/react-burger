@@ -1,54 +1,45 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from './../../services/actions/ingredients';
+import { Loader } from './../../ui/loader/loader';
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients() {
     const dispatch = useDispatch();
 
-    const ingredientsData = useSelector(
-        (state) => state.ingredientsReducer.ingredients
+    const { ingredients, loading } = useSelector(
+        (state) => state.ingredientsReducer
     );
+
+    // TODO: обработать ошибку
 
     useEffect(() => {
         dispatch(getIngredients());
-    }, [dispatch]); //TODO: узнать зачем нужен dispatch
+    }, [dispatch]);
 
     const [current, setCurrent] = useState('bun');
-    const [ingredients, setIngredients] = useState({
-        // убрать
-        buns: [],
-        sauces: [],
-        mains: [],
-    });
+
     const bunsRef = useRef();
     const saucesRef = useRef();
     const mainsRef = useRef();
 
-    useEffect(() => {
-        getStructIngredients();
-    }, [ingredientsData]);
+    const buns = useMemo(
+        () => ingredients.filter((item) => item.type === 'bun'),
+        [ingredients]
+    );
 
-    const getStructIngredients = useCallback(() => {
-        // заменить на обычные переменные с использованием memo
-        const result = {
-            buns: [],
-            sauces: [],
-            mains: [],
-        };
+    const sauces = useMemo(
+        () => ingredients.filter((item) => item.type === 'sauce'),
+        [ingredients]
+    );
 
-        ingredientsData.forEach((item) => {
-            item.count = Math.floor(Math.random() * 3); // temp for visual
-            if (item.type === 'bun') result.buns.push(item);
-            if (item.type === 'sauce') result.sauces.push(item);
-            if (item.type === 'main') result.mains.push(item);
-        });
-
-        setIngredients(result);
-    }, [ingredientsData]);
+    const mains = useMemo(
+        () => ingredients.filter((item) => item.type === 'main'),
+        [ingredients]
+    );
 
     return (
         <div className='mr-5'>
@@ -76,31 +67,32 @@ function BurgerIngredients({ data }) {
                 </Tab>
             </div>
 
-            {ingredients.buns.length &&
-            ingredients.sauces.length &&
-            ingredients.mains.length ? (
+            {/* {buns.length && sauces.length && mains.length ? ( */}
+            {!loading ? (
                 <ul className={`${styles.groupList} custom-scroll mt-10`}>
                     <li className={styles.ingredientsGroup} ref={bunsRef}>
                         <IngredientsGroup
                             groupName='Булки'
-                            ingredients={ingredients.buns}
+                            ingredients={buns}
                         />
                     </li>
                     <li className={styles.ingredientsGroup} ref={saucesRef}>
                         <IngredientsGroup
                             groupName='Соусы'
-                            ingredients={ingredients.sauces}
+                            ingredients={sauces}
                         />
                     </li>
                     <li className={styles.ingredientsGroup} ref={mainsRef}>
                         <IngredientsGroup
                             groupName='Начинка'
-                            ingredients={ingredients.mains}
+                            ingredients={mains}
                         />
                     </li>
                 </ul>
             ) : (
-                <p className='mt-10 text text_type_main-default'>Загрузка...</p>
+                <p className='mt-10 text text_type_main-default'>
+                    <Loader size='large' />
+                </p>
             )}
         </div>
     );

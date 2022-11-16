@@ -6,25 +6,22 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from './../../services/actions/ingredients';
 import { Loader } from './../../ui/loader/loader';
+import { useInView } from 'react-intersection-observer';
 
 function BurgerIngredients() {
     const dispatch = useDispatch();
 
-    const { ingredients, loading } = useSelector(
+    const { ingredients, loading, error } = useSelector(
         (state) => state.ingredientsReducer
     );
-
-    // TODO: обработать ошибку
 
     useEffect(() => {
         dispatch(getIngredients());
     }, [dispatch]);
 
-    const [current, setCurrent] = useState('bun');
-
-    const bunsRef = useRef();
-    const saucesRef = useRef();
-    const mainsRef = useRef();
+    useEffect(() => {
+        if (error) alert(error);
+    }, [error]);
 
     const buns = useMemo(
         () => ingredients.filter((item) => item.type === 'bun'),
@@ -41,58 +38,109 @@ function BurgerIngredients() {
         [ingredients]
     );
 
+    const [current, setCurrent] = useState('bun');
+
+    const bunsContainerRef = useRef();
+    const saucesContainerRef = useRef();
+    const mainsContainerRef = useRef();
+
+    const [bunsRef, bunsView] = useInView({
+        threshold: 0,
+    });
+
+    const [saucesRef, saucesView] = useInView({
+        threshold: 0,
+    });
+
+    const [mainsRef, mainsView] = useInView({
+        threshold: 0,
+    });
+
+    useEffect(() => {
+        if (bunsView) {
+            setCurrent('bun');
+        } else if (saucesView) {
+            setCurrent('sauce');
+        } else if (mainsView) {
+            setCurrent('main');
+        }
+    }, [bunsView, saucesView, mainsView]);
+
     return (
         <div className='mr-5'>
             <div className={styles.tabs}>
                 <Tab
-                    value='bun'
                     active={current === 'bun'}
-                    onClick={(val) => setCurrent(val)}
+                    onClick={() =>
+                        bunsContainerRef.current.scrollIntoView({
+                            behavior: 'smooth',
+                        })
+                    }
                 >
                     Булки
                 </Tab>
                 <Tab
-                    value='sauce'
                     active={current === 'sauce'}
-                    onClick={(val) => setCurrent(val)}
+                    onClick={() =>
+                        saucesContainerRef.current.scrollIntoView({
+                            behavior: 'smooth',
+                        })
+                    }
                 >
                     Соусы
                 </Tab>
                 <Tab
-                    value='main'
                     active={current === 'main'}
-                    onClick={(val) => setCurrent(val)}
+                    onClick={() =>
+                        mainsContainerRef.current.scrollIntoView({
+                            behavior: 'smooth',
+                        })
+                    }
                 >
                     Начинки
                 </Tab>
             </div>
-
-            {/* {buns.length && sauces.length && mains.length ? ( */}
             {!loading ? (
-                <ul className={`${styles.groupList} custom-scroll mt-10`}>
-                    <li className={styles.ingredientsGroup} ref={bunsRef}>
-                        <IngredientsGroup
-                            groupName='Булки'
-                            ingredients={buns}
-                        />
-                    </li>
-                    <li className={styles.ingredientsGroup} ref={saucesRef}>
-                        <IngredientsGroup
-                            groupName='Соусы'
-                            ingredients={sauces}
-                        />
-                    </li>
-                    <li className={styles.ingredientsGroup} ref={mainsRef}>
-                        <IngredientsGroup
-                            groupName='Начинка'
-                            ingredients={mains}
-                        />
-                    </li>
-                </ul>
+                error ? (
+                    <p className='mt-10 text text_type_main-default'>
+                        Ошибка загрузки данных.
+                    </p>
+                ) : (
+                    <ul className={`${styles.groupList} custom-scroll mt-10`}>
+                        <li
+                            className={styles.ingredientsGroup}
+                            ref={bunsContainerRef}
+                        >
+                            <IngredientsGroup
+                                groupName='Булки'
+                                ingredients={buns}
+                                ref={bunsRef}
+                            />
+                        </li>
+                        <li
+                            className={styles.ingredientsGroup}
+                            ref={saucesContainerRef}
+                        >
+                            <IngredientsGroup
+                                groupName='Соусы'
+                                ingredients={sauces}
+                                ref={saucesRef}
+                            />
+                        </li>
+                        <li
+                            className={styles.ingredientsGroup}
+                            ref={mainsContainerRef}
+                        >
+                            <IngredientsGroup
+                                groupName='Начинка'
+                                ingredients={mains}
+                                ref={mainsRef}
+                            />
+                        </li>
+                    </ul>
+                )
             ) : (
-                <p className='mt-10 text text_type_main-default'>
-                    <Loader size='large' />
-                </p>
+                <Loader size='large' />
             )}
         </div>
     );

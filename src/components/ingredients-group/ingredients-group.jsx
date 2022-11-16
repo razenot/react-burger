@@ -1,12 +1,16 @@
 import IngredientCard from '../ingredient-card/ingredient-card';
 import styles from './ingredients-group.module.css';
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
-function IngredientsGroup({ groupName, ingredients }) {
+const IngredientsGroup = forwardRef(({ groupName, ingredients }, ref) => {
     return (
         <>
             <div className='text text_type_main-medium'>{groupName}</div>
-            <div className={`${styles.container} mt-6 mb-10 pl-4 pr-4`}>
+            <div
+                className={`${styles.container} mt-6 mb-10 pl-4 pr-4`}
+                ref={ref}
+            >
                 {ingredients.length ? (
                     ingredients.map((item) => (
                         <IngredientCard key={item._id} ingredient={item} />
@@ -17,7 +21,7 @@ function IngredientsGroup({ groupName, ingredients }) {
             </div>
         </>
     );
-}
+});
 
 const ingredientData = PropTypes.shape({
     _id: PropTypes.string.isRequired,

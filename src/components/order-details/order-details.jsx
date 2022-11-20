@@ -3,7 +3,7 @@ import styles from './order-details.module.css';
 import doneImg from './../../images/done.svg';
 import PropTypes from 'prop-types';
 
-function OrderDetails({ handleClose }) {
+function OrderDetails({ handleClose, orderId }) {
     return (
         <div className={styles.overflow}>
             <Modal handleClose={handleClose}>
@@ -11,7 +11,7 @@ function OrderDetails({ handleClose }) {
                     <p
                         className={`${styles.orderId} text text_type_digits-large`}
                     >
-                        034536
+                        {orderId}
                     </p>
                     <p className='text text_type_main-medium mt-8'>
                         идентификатор заказа
@@ -33,6 +33,7 @@ function OrderDetails({ handleClose }) {
 
 OrderDetails.propTypes = {
     handleClose: PropTypes.func,
+    orderId: PropTypes.number,
 };
 
 export default OrderDetails;

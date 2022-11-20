@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import AppHeader from '../app-header/app-header';

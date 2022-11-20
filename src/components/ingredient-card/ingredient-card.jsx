@@ -1,31 +1,44 @@
 import { useState } from 'react';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import { useDrag } from 'react-dnd';
+import { useDispatch } from 'react-redux';
 import {
     CurrencyIcon,
     Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrag } from 'react-dnd';
-import styles from './ingredient-card.module.css';
 import PropTypes from 'prop-types';
+import { propIngredientData } from './../../services/prop-types-pattern';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import {
+    DETAIL_INGREDIENT_ADD,
+    DETAIL_INGREDIENT_RESET,
+} from './../../services/redux/ingredient-detail/action';
+import styles from './ingredient-card.module.css';
 
 function IngredientCard({ ingredient, count }) {
     const [visibleIngredintDetail, setVisibleIngredintDetail] = useState(false);
 
+    const dispatch = useDispatch();
+
     const handleCloseIngredintDetail = () => {
+        dispatch({
+            type: DETAIL_INGREDIENT_RESET,
+        });
         setVisibleIngredintDetail(false);
     };
 
     const handleOpenIngredintDetail = () => {
+        dispatch({
+            type: DETAIL_INGREDIENT_ADD,
+            payload: ingredient,
+        });
         setVisibleIngredintDetail(true);
     };
-
-    const id = ingredient._id;
 
     const [{ opacity }, ref] = useDrag({
         type: ingredient.type === 'bun' ? 'bun' : 'ingredient',
         item: ingredient,
         collect: (monitor) => ({
-            opacity: monitor.isDragging() ? 0.5 : 1,
+            opacity: monitor.isDragging() ? 0.3 : 1,
         }),
     });
 
@@ -54,31 +67,14 @@ function IngredientCard({ ingredient, count }) {
                 </div>
             </div>
             {visibleIngredintDetail && (
-                <IngredientDetails
-                    handleClose={handleCloseIngredintDetail}
-                    data={ingredient}
-                />
+                <IngredientDetails handleClose={handleCloseIngredintDetail} />
             )}
         </>
     );
 }
 
-const ingredientData = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-});
-
 IngredientCard.propTypes = {
-    ingredient: ingredientData.isRequired,
+    ingredient: propIngredientData.isRequired,
     count: PropTypes.number,
 };
 

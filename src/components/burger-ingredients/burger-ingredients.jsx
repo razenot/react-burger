@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientsGroup from '../ingredients-group/ingredients-group';
-import styles from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from './../../services/actions/ingredients';
-import { Loader } from './../../ui/loader/loader';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
+import IngredientsGroup from '../ingredients-group/ingredients-group';
+import { getIngredients } from '../../services/redux/ingredients/action';
+import { Loader } from './../../ui/loader/loader';
+import styles from './burger-ingredients.module.css';
 
 function BurgerIngredients() {
     const dispatch = useDispatch();
@@ -148,23 +147,5 @@ function BurgerIngredients() {
         </div>
     );
 }
-
-const ingredientData = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-});
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientData.isRequired),
-};
 
 export default BurgerIngredients;

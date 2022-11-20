@@ -1,8 +1,9 @@
-import IngredientCard from '../ingredient-card/ingredient-card';
-import styles from './ingredients-group.module.css';
-import PropTypes from 'prop-types';
 import { forwardRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { propIngredientData } from './../../services/prop-types-pattern';
+import IngredientCard from '../ingredient-card/ingredient-card';
+import styles from './ingredients-group.module.css';
 
 const IngredientsGroup = forwardRef(
     ({ groupType, groupName, ingredients }, ref) => {
@@ -46,24 +47,10 @@ const IngredientsGroup = forwardRef(
     }
 );
 
-const ingredientData = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-});
-
 IngredientsGroup.propTypes = {
     groupType: PropTypes.string,
     groupName: PropTypes.string,
-    data: PropTypes.arrayOf(ingredientData.isRequired),
+    ingredients: PropTypes.arrayOf(propIngredientData.isRequired),
 };
 
 export default IngredientsGroup;

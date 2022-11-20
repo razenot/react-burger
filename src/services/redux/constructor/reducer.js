@@ -1,9 +1,9 @@
 import {
     CONSTRUCTOR_ADD,
     CONSTRUCTOR_REMOVE,
-    CONSTRUCTOR_REORDER,
+    CONSTRUCTOR_REBUILD,
     CONSTRUCTOR_RESET,
-} from './../actions/constructor';
+} from './action';
 
 const initialState = {
     ingredients: [],
@@ -35,12 +35,12 @@ export const constructorReducer = (state = initialState, action) => {
                 ],
             };
         }
-        case CONSTRUCTOR_REORDER: {
+        case CONSTRUCTOR_REBUILD: {
             const ingredients = [...state.ingredients];
             ingredients.splice(
-                action.payload.to,
+                action.payload.before,
                 0,
-                ingredients.splice(action.payload.from, 1)[0]
+                ingredients.splice(action.payload.after, 1)[0]
             );
             return {
                 ...state,

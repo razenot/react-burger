@@ -1,8 +1,13 @@
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Modal from '../modal/modal';
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
 
-function IngredientDetails({ handleClose, data }) {
+function IngredientDetails({ handleClose }) {
+    const data = useSelector(
+        (state) => state.ingredientDetailReducer.ingredientData
+    );
+
     return (
         <div className={styles.overflow}>
             <Modal title='Детали ингредиента' handleClose={handleClose}>
@@ -53,19 +58,8 @@ function IngredientDetails({ handleClose, data }) {
     );
 }
 
-const ingredientData = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    image_large: PropTypes.string.isRequired,
-});
-
 IngredientDetails.propTypes = {
     handleClose: PropTypes.func,
-    data: ingredientData.isRequired,
 };
 
 export default IngredientDetails;

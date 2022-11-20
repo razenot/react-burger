@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
@@ -112,6 +112,7 @@ function BurgerIngredients() {
                             ref={bunsContainerRef}
                         >
                             <IngredientsGroup
+                                groupType='buns'
                                 groupName='Булки'
                                 ingredients={buns}
                                 ref={bunsRef}
@@ -122,6 +123,7 @@ function BurgerIngredients() {
                             ref={saucesContainerRef}
                         >
                             <IngredientsGroup
+                                groupType='sauces'
                                 groupName='Соусы'
                                 ingredients={sauces}
                                 ref={saucesRef}
@@ -132,6 +134,7 @@ function BurgerIngredients() {
                             ref={mainsContainerRef}
                         >
                             <IngredientsGroup
+                                groupType='mains'
                                 groupName='Начинка'
                                 ingredients={mains}
                                 ref={mainsRef}

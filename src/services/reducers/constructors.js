@@ -1,6 +1,6 @@
 import {
     CONSTRUCTOR_ADD,
-    CONSTRUCTOR_DELETE,
+    CONSTRUCTOR_REMOVE,
     CONSTRUCTOR_REORDER,
     CONSTRUCTOR_RESET,
 } from './../actions/constructor';
@@ -25,12 +25,13 @@ export const constructorReducer = (state = initialState, action) => {
                 };
             }
         }
-        case CONSTRUCTOR_DELETE: {
+        case CONSTRUCTOR_REMOVE: {
             return {
                 ...state,
                 ingredients: [
-                    ...state.ingredients.slice(0, action.payload),
-                    ...state.ingredients.slice(action.payload + 1),
+                    ...state.ingredients.filter(
+                        (item) => item.id != action.payload
+                    ),
                 ],
             };
         }

@@ -4,10 +4,11 @@ import {
     CurrencyIcon,
     Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrag } from 'react-dnd';
 import styles from './ingredient-card.module.css';
 import PropTypes from 'prop-types';
 
-function IngredientCard({ ingredient }) {
+function IngredientCard({ ingredient, count }) {
     const [visibleIngredintDetail, setVisibleIngredintDetail] = useState(false);
 
     const handleCloseIngredintDetail = () => {
@@ -18,16 +19,26 @@ function IngredientCard({ ingredient }) {
         setVisibleIngredintDetail(true);
     };
 
+    const id = ingredient._id;
+
+    const [{ opacity }, ref] = useDrag({
+        type: ingredient.type === 'bun' ? 'bun' : 'ingredient',
+        item: ingredient,
+        collect: (monitor) => ({
+            opacity: monitor.isDragging() ? 0.5 : 1,
+        }),
+    });
+
     return (
         <>
             <div
+                ref={ref}
+                style={{ opacity }}
                 className={styles.wrapper + ' mb-8'}
                 onClick={handleOpenIngredintDetail}
             >
                 <div className='pl-4 pr-4'>
-                    {ingredient.count > 0 && (
-                        <Counter count={ingredient.count} size='default' />
-                    )}
+                    {count > 0 && <Counter count={count} size='default' />}
                     <img src={ingredient.image} alt={ingredient.name} />
                 </div>
                 <div className={styles.price}>
@@ -68,6 +79,7 @@ const ingredientData = PropTypes.shape({
 
 IngredientCard.propTypes = {
     ingredient: ingredientData.isRequired,
+    count: PropTypes.number,
 };
 
 export default IngredientCard;

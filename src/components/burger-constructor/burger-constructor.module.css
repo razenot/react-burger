@@ -1,3 +1,7 @@
+.burgerConstructor {
+    width: 100%;
+}
+
 .elementsWrapper {
     display: flex;
     flex-direction: column;
@@ -6,7 +10,7 @@
 
 .scrollable {
     composes: elementsWrapper;
-    height: 464px;
+    max-height: 464px;
     overflow-y: overlay;
     overflow-x: hidden;
 }
@@ -43,4 +47,30 @@
     display: flex;
     justify-content: end;
     align-items: center;
+}
+
+.emptyIngredient {
+    padding: 16px 24px;
+    border-radius: var(--common-border-radius-s);
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    font-family: 'Jet Brains Mono';
+    font-size: 16px;
+    line-height: 24px;
+    color: #f2f2f3;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: initial;
+}
+
+.emptyIngredientTop {
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.emptyIngredientBot {
+    border-radius: var(--bottom-constructor-item-border-radius);
 }

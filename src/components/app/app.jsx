@@ -1,34 +1,11 @@
-import { useState, useEffect } from 'react';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import globalStyles from './../../global.module.css';
 
 function App() {
-    const [data, setData] = useState([]);
-    const [errorData, setErrorData] = useState(false);
-    const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
-
-    useEffect(() => {
-        getIngredients();
-    }, []);
-
-    const checkReponse = (res) => {
-        return res.ok
-            ? res.json()
-            : res.json().then((err) => Promise.reject(err));
-    };
-
-    function getIngredients() {
-        fetch(`${BURGER_API_URL}/ingredients`)
-            .then(checkReponse)
-            .then((resData) => setData(resData.data))
-            .catch((e) => {
-                setErrorData(true);
-                alert(`Ошибка загрузки данных (${e}). Перезагрузите страницу.`);
-            });
-    }
-
     return (
         <div>
             <AppHeader />
@@ -36,20 +13,16 @@ function App() {
                 <h1 className='mt-10 mb-5 text text_type_main-large'>
                     Соберите бургер
                 </h1>
-                {data.length > 0 ? (
+                <DndProvider backend={HTML5Backend}>
                     <div className={globalStyles.row}>
                         <section className={globalStyles.column6}>
-                            <BurgerIngredients data={data} />
+                            <BurgerIngredients />
                         </section>
                         <section className={globalStyles.column6}>
-                            <BurgerConstructor data={data} />
+                            <BurgerConstructor />
                         </section>
                     </div>
-                ) : (
-                    <p className='mt-10 text text_type_main-default'>
-                        {errorData ? 'Ошибка загрузки данных.' : 'Пусто.'}
-                    </p>
-                )}
+                </DndProvider>
             </main>
         </div>
     );

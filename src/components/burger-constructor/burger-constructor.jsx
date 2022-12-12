@@ -15,13 +15,18 @@ import {
 import { sendOrder, ORDER_RESET } from '../../services/redux/order/action';
 import { Loader } from '../../ui/loader/loader';
 import styles from './burger-constructor.module.css';
+import { useHistory } from 'react-router-dom';
 
 function BurgerConstructor() {
     const [total, setTotal] = useState(0);
 
     const [visibleOrderDetail, setVisibleOrderDetail] = useState(false);
 
+    const { isAuth } = useSelector((state) => state.authReducer);
+
     const dispatch = useDispatch();
+
+    const history = useHistory();
 
     const { orderFields, loading, error } = useSelector(
         (state) => state.orderReducer
@@ -54,16 +59,20 @@ function BurgerConstructor() {
     };
 
     const handleCreateOrder = () => {
-        let toOrder = [];
-        toOrder.push(bun._id);
-        toOrder = toOrder.concat(
-            ingredients.map((item) => {
-                return item._id;
-            })
-        );
-        toOrder.push(bun._id);
-        dispatch(sendOrder(toOrder));
-        setVisibleOrderDetail(true);
+        if (localStorage.getItem('accessToken') && isAuth) {
+            let toOrder = [];
+            toOrder.push(bun._id);
+            toOrder = toOrder.concat(
+                ingredients.map((item) => {
+                    return item._id;
+                })
+            );
+            toOrder.push(bun._id);
+            dispatch(sendOrder(toOrder));
+            setVisibleOrderDetail(true);
+        } else {
+            history.replace({ pathname: '/login' });
+        }
     };
 
     const [, dropBunTarget] = useDrop({

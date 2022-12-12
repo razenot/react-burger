@@ -1,3 +1,5 @@
+.notFoundPage,
+.ingredientPage,
 .authenticationPage {
     display: flex;
     justify-content: center;
@@ -15,4 +17,21 @@
 
 .link:hover {
     text-decoration: underline;
+}
+
+.profileWrapper {
+    margin-top: 120px;
+    display: flex;
+}
+
+.leftSidebar {
+    width: 320px;
+}
+
+.profileContent {
+    min-width: 480px;
+}
+
+.error {
+    color: #e52b1a;
 }

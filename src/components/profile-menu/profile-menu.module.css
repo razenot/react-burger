@@ -1,0 +1,23 @@
+ul.menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.menu a,
+ul.menu div {
+    text-decoration: none;
+    color: #8585ad;
+    padding: 17px 0;
+    display: block;
+    cursor: pointer;
+}
+
+ul.menu li a.active,
+ul.menu li div.active {
+    color: #ffffff !important;
+}
+
+.opacity {
+    opacity: 0.4;
+}

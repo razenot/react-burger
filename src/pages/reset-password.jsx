@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import {
     PasswordInput,
@@ -10,10 +9,13 @@ import styles from './style.module.css';
 import { Loader } from '../ui/loader/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_RESET_PASSWORD_SUCCESS } from '../services/redux/auth/action';
+import { useForm } from '../services/hooks/useForm';
 
 export function ResetPasswordPage() {
-    const [password, setPassword] = useState('');
-    const [code, setCode] = useState('');
+    const { values, handleChange } = useForm({
+        password: '',
+        code: '',
+    });
 
     const history = useHistory();
     const location = useLocation();
@@ -36,14 +38,9 @@ export function ResetPasswordPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-    const onChangeCode = (e) => {
-        setCode(e.target.value);
-    };
-    const onClickResetPassword = () => {
-        requestResetPassword(password, code)
+    const onSubmit = (e) => {
+        e.preventDefault();
+        requestResetPassword(values.password, values.code)
             .then(() => {
                 dispatch({
                     type: AUTH_RESET_PASSWORD_SUCCESS,
@@ -61,33 +58,36 @@ export function ResetPasswordPage() {
                 <div className='text text_type_main-medium'>
                     Восстановление пароля
                 </div>
-                <div className='mt-6'>
-                    <PasswordInput
-                        placeholder={'Введите новый пароль'}
-                        onChange={onChangePassword}
-                        value={password}
-                    />
-                </div>
-                <div className='mt-6'>
-                    <Input
-                        type={'text'}
-                        placeholder={'Введите код из письма'}
-                        onChange={onChangeCode}
-                        value={code}
-                        size={'default'}
-                    />
-                </div>
-                <div className='mt-6'>
-                    <Button
-                        htmlType='button'
-                        type='primary'
-                        size='medium'
-                        onClick={onClickResetPassword}
-                        disabled={!password || !code}
-                    >
-                        Сохранить
-                    </Button>
-                </div>
+                <form onSubmit={onSubmit}>
+                    <div className='mt-6'>
+                        <PasswordInput
+                            placeholder={'Введите новый пароль'}
+                            onChange={handleChange}
+                            value={values.password}
+                            name={'password'}
+                        />
+                    </div>
+                    <div className='mt-6'>
+                        <Input
+                            type={'text'}
+                            placeholder={'Введите код из письма'}
+                            onChange={handleChange}
+                            value={values.code}
+                            size={'default'}
+                            name={'code'}
+                        />
+                    </div>
+                    <div className='mt-6'>
+                        <Button
+                            htmlType='submit'
+                            type='primary'
+                            size='medium'
+                            disabled={!values.password || !values.code}
+                        >
+                            Сохранить
+                        </Button>
+                    </div>
+                </form>
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Вспомнили пароль? </span>

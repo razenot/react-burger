@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import {
     Input,
@@ -10,11 +9,14 @@ import styles from './style.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { userRegister } from '../services/redux/auth/action';
 import { Loader } from '../ui/loader/loader';
+import { useForm } from '../services/hooks/useForm';
 
 export function RegisterPage() {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
+    const { values, handleChange } = useForm({
+        name: '',
+        email: '',
+        password: '',
+    });
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -33,69 +35,68 @@ export function RegisterPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-    const onChangeName = (e) => {
-        setName(e.target.value);
-    };
-
-    const onRegister = () => {
-        dispatch(userRegister(email, password, name));
+    const onSubmit = (e) => {
+        e.preventDefault();
+        dispatch(userRegister(values));
     };
 
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
                 <div className='text text_type_main-medium'>Регистрация</div>
-                <div className='mt-6'>
-                    <Input
-                        type={'text'}
-                        placeholder={'Имя'}
-                        onChange={onChangeName}
-                        value={name}
-                        size={'default'}
-                    />
-                </div>
-                <div className='mt-6'>
-                    <EmailInput
-                        onChange={onChangeEmail}
-                        value={email}
-                        isIcon={false}
-                    />
-                </div>
-                <div className='mt-6'>
-                    <PasswordInput
-                        onChange={onChangePassword}
-                        value={password}
-                    />
-                </div>
-                {authLoading && (
+                <form onSubmit={onSubmit}>
                     <div className='mt-6'>
-                        <Loader size='medium' minHeight />
+                        <Input
+                            type={'text'}
+                            placeholder={'Имя'}
+                            onChange={handleChange}
+                            value={values.name}
+                            size={'default'}
+                            name={'name'}
+                        />
                     </div>
-                )}
-                {authError && (
-                    <div
-                        className={`${styles.error} mt-6 text text_type_main-default`}
-                    >
-                        {authError}
+                    <div className='mt-6'>
+                        <EmailInput
+                            onChange={handleChange}
+                            value={values.email}
+                            isIcon={false}
+                            name={'email'}
+                        />
                     </div>
-                )}
-                <div className='mt-6'>
-                    <Button
-                        htmlType='button'
-                        type='primary'
-                        size='medium'
-                        disabled={!email || !password || !name}
-                        onClick={onRegister}
-                    >
-                        Зарегистрироваться
-                    </Button>
-                </div>
+                    <div className='mt-6'>
+                        <PasswordInput
+                            onChange={handleChange}
+                            value={values.password}
+                            name={'password'}
+                        />
+                    </div>
+                    {authLoading && (
+                        <div className='mt-6'>
+                            <Loader size='medium' minHeight />
+                        </div>
+                    )}
+                    {authError && (
+                        <div
+                            className={`${styles.error} mt-6 text text_type_main-default`}
+                        >
+                            {authError}
+                        </div>
+                    )}
+                    <div className='mt-6'>
+                        <Button
+                            htmlType='submit'
+                            type='primary'
+                            size='medium'
+                            disabled={
+                                !values.email ||
+                                !values.password ||
+                                !values.name
+                            }
+                        >
+                            Зарегистрироваться
+                        </Button>
+                    </div>
+                </form>
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Уже зарегистрированы? </span>

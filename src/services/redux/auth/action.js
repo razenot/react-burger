@@ -19,10 +19,11 @@ export const AUTH_USER_ERROR = 'AUTH_USER_ERROR';
 export const AUTH_FORGOT_PASSWORD_SUCCESS = 'AUTH_FORGOT_PASSWORD_SUCCESS';
 export const AUTH_RESET_PASSWORD_SUCCESS = 'AUTH_RESET_PASSWORD_SUCCESS';
 
-export const userLogin = (email, password) => (dispatch) => {
+export const userLogin = (form) => (dispatch) => {
     dispatch({
         type: AUTH_LOGIN_GET,
     });
+    const { email, password } = form;
     return requestLogin(email, password)
         .then((loginData) => {
             dispatch({
@@ -38,10 +39,11 @@ export const userLogin = (email, password) => (dispatch) => {
         });
 };
 
-export const userRegister = (email, password, name) => (dispatch) => {
+export const userRegister = (form) => (dispatch) => {
     dispatch({
         type: AUTH_REGISTER_GET,
     });
+    const { email, password, name } = form;
     return requestRegister(email, password, name)
         .then((registerData) => {
             dispatch({
@@ -88,10 +90,11 @@ export const userGet = () => (dispatch) => {
         });
 };
 
-export const userSet = (email, password, name) => (dispatch) => {
+export const userSet = (form) => (dispatch) => {
     dispatch({
         type: AUTH_USER_REQUEST,
     });
+    const { email, password, name } = form;
     return requestSetUser(email, password, name)
         .then((userData) => {
             dispatch({

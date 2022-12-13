@@ -100,7 +100,6 @@ export const requestRegister = (email, password, name) => {
 };
 
 export const refreshToken = () => {
-    console.log(localStorage.getItem('refreshToken'));
     const data = {
         method: 'POST',
         headers: {

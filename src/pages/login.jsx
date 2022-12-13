@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import {
     EmailInput,
@@ -9,10 +8,13 @@ import styles from './style.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../services/redux/auth/action';
 import { Loader } from '../ui/loader/loader';
+import { useForm } from '../services/hooks/useForm';
 
 export function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { values, handleChange } = useForm({
+        email: '',
+        password: '',
+    });
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -31,57 +33,54 @@ export function LoginPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const onLogin = () => {
-        dispatch(userLogin(email, password));
+    const onSubmit = (e) => {
+        e.preventDefault();
+        dispatch(userLogin(values));
     };
 
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
                 <div className='text text_type_main-medium'>Вход</div>
-                <div className='mt-6'>
-                    <EmailInput
-                        onChange={onChangeEmail}
-                        value={email}
-                        isIcon={false}
-                    />
-                </div>
-                <div className='mt-6'>
-                    <PasswordInput
-                        onChange={onChangePassword}
-                        value={password}
-                    />
-                </div>
-                {authLoading && (
+                <form onSubmit={onSubmit}>
                     <div className='mt-6'>
-                        <Loader size='medium' minHeight />
+                        <EmailInput
+                            onChange={handleChange}
+                            value={values.email}
+                            isIcon={false}
+                            name={'email'}
+                        />
                     </div>
-                )}
-                {authError && (
-                    <div
-                        className={`${styles.error} mt-6 text text_type_main-default`}
-                    >
-                        {authError}
+                    <div className='mt-6'>
+                        <PasswordInput
+                            onChange={handleChange}
+                            value={values.password}
+                            name={'password'}
+                        />
                     </div>
-                )}
-                <div className='mt-6'>
-                    <Button
-                        htmlType='button'
-                        type='primary'
-                        size='medium'
-                        disabled={!email || !password}
-                        onClick={onLogin}
-                    >
-                        Войти
-                    </Button>
-                </div>
+                    {authLoading && (
+                        <div className='mt-6'>
+                            <Loader size='medium' minHeight />
+                        </div>
+                    )}
+                    {authError && (
+                        <div
+                            className={`${styles.error} mt-6 text text_type_main-default`}
+                        >
+                            {authError}
+                        </div>
+                    )}
+                    <div className='mt-6'>
+                        <Button
+                            htmlType='submit'
+                            type='primary'
+                            size='medium'
+                            disabled={!values.email || !values.password}
+                        >
+                            Войти
+                        </Button>
+                    </div>
+                </form>
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Вы — новый пользователь? </span>

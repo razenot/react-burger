@@ -20,6 +20,7 @@ import { userGet } from '../../services/redux/auth/action';
 import { useEffect } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import { getIngredients } from '../../services/redux/ingredients/action';
 
 function App() {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
         if (localStorage.getItem('accessToken')) {
             dispatch(userGet());
         }
+        dispatch(getIngredients());
     }, [dispatch]);
 
     return (
@@ -88,7 +90,10 @@ function App() {
                     <Route
                         path='/ingredients/:id'
                         children={
-                            <Modal handleClose={handleModalClose}>
+                            <Modal
+                                handleClose={handleModalClose}
+                                title='Детали ингредиента'
+                            >
                                 <IngredientDetails />
                             </Modal>
                         }

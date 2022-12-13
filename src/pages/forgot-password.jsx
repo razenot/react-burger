@@ -13,6 +13,10 @@ import { AUTH_FORGOT_PASSWORD_SUCCESS } from '../services/redux/auth/action';
 export function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
 
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+    };
+
     const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -29,11 +33,8 @@ export function ForgotPasswordPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const onClickForgotPassword = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
         requestForgotPassword(email)
             .then(() => {
                 dispatch({
@@ -52,25 +53,26 @@ export function ForgotPasswordPage() {
                 <div className='text text_type_main-medium'>
                     Восстановление пароля
                 </div>
-                <div className='mt-6'>
-                    <EmailInput
-                        onChange={onChangeEmail}
-                        value={email}
-                        isIcon={false}
-                        placeholder={'Укажите e-mail'}
-                    />
-                </div>
-                <div className='mt-6'>
-                    <Button
-                        htmlType='button'
-                        type='primary'
-                        size='medium'
-                        onClick={onClickForgotPassword}
-                        disabled={!email}
-                    >
-                        Восстановить
-                    </Button>
-                </div>
+                <form onSubmit={onSubmit}>
+                    <div className='mt-6'>
+                        <EmailInput
+                            onChange={onChangeEmail}
+                            value={email}
+                            isIcon={false}
+                            placeholder={'Укажите e-mail'}
+                        />
+                    </div>
+                    <div className='mt-6'>
+                        <Button
+                            htmlType='submit'
+                            type='primary'
+                            size='medium'
+                            disabled={!email}
+                        >
+                            Восстановить
+                        </Button>
+                    </div>
+                </form>
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Вспомнили пароль? </span>

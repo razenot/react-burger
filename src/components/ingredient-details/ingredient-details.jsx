@@ -10,12 +10,6 @@ function IngredientDetails() {
     const { id } = useParams();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (!ingredients.length) {
-            dispatch(getIngredients());
-        }
-    }, [ingredients.length, dispatch]);
-
     let data = useMemo(() => {
         return ingredients.find((item) => item._id === id);
     }, [ingredients, id]);

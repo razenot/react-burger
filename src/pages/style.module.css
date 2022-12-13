@@ -1,9 +1,15 @@
 .notFoundPage,
-.ingredientPage,
 .authenticationPage {
     display: flex;
     justify-content: center;
     margin-top: 180px;
+}
+
+.ingredientPage {
+    display: flex;
+    align-items: center;
+    margin-top: 180px;
+    flex-flow: column;
 }
 
 .container {

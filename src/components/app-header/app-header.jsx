@@ -50,7 +50,9 @@ function AppHeader() {
                         </div>
                     </section>
                     <section className={styles.columnCenter}>
-                        <Logo />
+                        <Link to='/'>
+                            <Logo />
+                        </Link>
                     </section>
                     <section className={styles.columnRight}>
                         <div

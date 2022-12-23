@@ -16,7 +16,7 @@ import styles from './../burger-constructor/burger-constructor.module.css';
 const ConstructorIngredient = ({ ingredient, index }) => {
     const dispatch = useDispatch();
 
-    const removeIngredints = () => {
+    const removeIngredients = () => {
         dispatch({
             type: CONSTRUCTOR_REMOVE,
             payload: ingredient.id,
@@ -84,7 +84,7 @@ const ConstructorIngredient = ({ ingredient, index }) => {
                     text={ingredient.name}
                     price={ingredient.price}
                     thumbnail={ingredient.image}
-                    handleClose={removeIngredints}
+                    handleClose={removeIngredients}
                 />
             </div>
         </div>

@@ -15,10 +15,6 @@ function BurgerIngredients() {
     );
 
     useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
-
-    useEffect(() => {
         if (error) alert(error);
     }, [error]);
 

@@ -4,10 +4,15 @@ import {
     ProfileIcon,
     Logo,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, useRouteMatch } from 'react-router-dom';
 import styles from './header.module.css';
 import globalStyles from './../../global.module.css';
 
 function AppHeader() {
+    const isConstructor = !!useRouteMatch({ path: '/', exact: true });
+    const isFeed = !!useRouteMatch('/profile/orders');
+    const isProfile = !!useRouteMatch('/profile') && !isFeed;
+
     return (
         <div className={styles.headerWrapper}>
             <div
@@ -15,29 +20,56 @@ function AppHeader() {
             >
                 <header className={styles.header}>
                     <section className={styles.columnLeft}>
-                        <a href='#' className={styles.link}>
-                            <BurgerIcon type='primary' />
-                            <span className='text text_type_main-default ml-2'>
+                        <div
+                            className={`${styles.link} ${
+                                isConstructor ? styles.active : ''
+                            }`}
+                        >
+                            <BurgerIcon
+                                type={isConstructor ? 'primary' : 'secondary'}
+                            />
+                            <Link
+                                to='/'
+                                className='text text_type_main-default text_color_inactive ml-2'
+                            >
                                 Конструктор
-                            </span>
-                        </a>
-                        <a href='#' className={`${styles.link} ml-2`}>
-                            <ListIcon type='secondary' />
-                            <span className='text text_type_main-default text_color_inactive ml-2'>
+                            </Link>
+                        </div>
+                        <div
+                            className={`ml-2 ${styles.link} ${
+                                isFeed ? styles.active : ''
+                            }`}
+                        >
+                            <ListIcon type={isFeed ? 'primary' : 'secondary'} />
+                            <Link
+                                to='/profile/orders'
+                                className='text text_type_main-default text_color_inactive ml-2'
+                            >
                                 Лента заказов
-                            </span>
-                        </a>
+                            </Link>
+                        </div>
                     </section>
                     <section className={styles.columnCenter}>
-                        <Logo />
+                        <Link to='/'>
+                            <Logo />
+                        </Link>
                     </section>
                     <section className={styles.columnRight}>
-                        <a href='#' className={styles.link}>
-                            <ProfileIcon type='secondary' />
-                            <span className='text text_type_main-default text_color_inactive ml-2'>
+                        <div
+                            className={`${styles.link} ${
+                                isProfile ? styles.active : ''
+                            }`}
+                        >
+                            <ProfileIcon
+                                type={isProfile ? 'primary' : 'secondary'}
+                            />
+                            <Link
+                                to='/profile'
+                                className='text text_type_main-default text_color_inactive ml-2'
+                            >
                                 Личный кабинет
-                            </span>
-                        </a>
+                            </Link>
+                        </div>
                     </section>
                 </header>
             </div>

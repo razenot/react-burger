@@ -1,0 +1,13 @@
+.buttonGroup {
+    display: flex;
+    justify-content: end;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.error {
+    color: #e52b1a;
+}

@@ -1,0 +1,43 @@
+.notFoundPage,
+.authenticationPage {
+    display: flex;
+    justify-content: center;
+    margin-top: 180px;
+}
+
+.ingredientPage {
+    display: flex;
+    align-items: center;
+    margin-top: 180px;
+    flex-flow: column;
+}
+
+.container {
+    text-align: center;
+}
+
+.link {
+    color: #4c4cff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.profileWrapper {
+    margin-top: 120px;
+    display: flex;
+}
+
+.leftSidebar {
+    width: 320px;
+}
+
+.profileContent {
+    min-width: 480px;
+}
+
+.error {
+    color: #e52b1a;
+}

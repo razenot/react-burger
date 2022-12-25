@@ -1,27 +1,29 @@
+import { FC, FormEvent } from 'react';
+
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import {
-    Input,
     EmailInput,
     PasswordInput,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './style.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { userRegister } from '../services/redux/auth/action';
+import { userLogin } from '../services/redux/auth/action';
 import { Loader } from '../ui/loader/loader';
 import { useForm } from '../services/hooks/useForm';
+import { TModalState } from '../services/utils/types';
 
-export function RegisterPage() {
+export const LoginPage: FC = () => {
     const { values, handleChange } = useForm({
-        name: '',
         email: '',
         password: '',
     });
 
-    const dispatch = useDispatch();
-    const location = useLocation();
+    const dispatch = useDispatch<any>();
+    const location = useLocation<TModalState>();
 
     const { authError, authLoading, isAuth, isCheckedUser } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
@@ -35,26 +37,16 @@ export function RegisterPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userRegister(values));
+        dispatch(userLogin(values));
     };
 
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
-                <div className='text text_type_main-medium'>Регистрация</div>
+                <div className='text text_type_main-medium'>Вход</div>
                 <form onSubmit={onSubmit}>
-                    <div className='mt-6'>
-                        <Input
-                            type={'text'}
-                            placeholder={'Имя'}
-                            onChange={handleChange}
-                            value={values.name}
-                            size={'default'}
-                            name={'name'}
-                        />
-                    </div>
                     <div className='mt-6'>
                         <EmailInput
                             onChange={handleChange}
@@ -87,25 +79,33 @@ export function RegisterPage() {
                             htmlType='submit'
                             type='primary'
                             size='medium'
-                            disabled={
-                                !values.email ||
-                                !values.password ||
-                                !values.name
-                            }
+                            disabled={!values.email || !values.password}
                         >
-                            Зарегистрироваться
+                            Войти
                         </Button>
                     </div>
                 </form>
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
-                        <span>Уже зарегистрированы? </span>
-                        <Link to='/login' className={styles.link}>
-                            Войти
+                        <span>Вы — новый пользователь? </span>
+                        <Link<TModalState>
+                            to='/register'
+                            className={styles.link}
+                        >
+                            Зарегистрироваться
+                        </Link>
+                    </p>
+                    <p className='text text_type_main-default text_color_inactive mt-4'>
+                        <span>Забыли пароль? </span>
+                        <Link<TModalState>
+                            to='/forgot-password'
+                            className={styles.link}
+                        >
+                            Восстановить пароль
                         </Link>
                     </p>
                 </div>
             </div>
         </div>
     );
-}
+};

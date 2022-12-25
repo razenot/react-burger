@@ -12,6 +12,7 @@
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
     "@ya.praktikum/react-developer-burger-ui-components": "1.13.5",
+    "dnd-core": "^16.0.1",
     "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-css-modules": "4.7.11",

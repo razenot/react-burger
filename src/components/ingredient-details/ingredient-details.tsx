@@ -1,17 +1,21 @@
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { NotFound404 } from '../../pages';
-import { getIngredients } from '../../services/redux/ingredients/action';
+import { TIngredient } from '../../services/utils/types';
 import styles from './ingredient-details.module.css';
 
-function IngredientDetails() {
-    const { ingredients } = useSelector((state) => state.ingredientsReducer);
-    const { id } = useParams();
-    const dispatch = useDispatch();
+interface IIngredientDetailsParams {
+    id: string;
+}
 
-    let data = useMemo(() => {
-        return ingredients.find((item) => item._id === id);
+const IngredientDetails: FC = () => {
+    // @ts-ignore: Unreachable code error
+    const { ingredients } = useSelector((state) => state.ingredientsReducer);
+    const { id } = useParams<IIngredientDetailsParams>();
+
+    let data: TIngredient = useMemo(() => {
+        return ingredients.find((item: TIngredient) => item._id === id);
     }, [ingredients, id]);
 
     if (!ingredients.length) {
@@ -66,6 +70,6 @@ function IngredientDetails() {
             </div>
         </div>
     );
-}
+};
 
 export default IngredientDetails;

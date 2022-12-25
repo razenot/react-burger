@@ -4,15 +4,15 @@ import {
     EmailInput,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useRef, useState } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../services/hooks/useForm';
 import { userSet } from '../../services/redux/auth/action';
 import styles from './profile-edit.module.css';
 
-function ProfileEdit() {
-    const nameRef = useRef();
-    const [nameDisabled, setNameDisabled] = useState(true);
+const ProfileEdit: FC = () => {
+    const nameRef = useRef<HTMLInputElement>(null!);
+    const [nameDisabled, setNameDisabled] = useState<boolean>(true);
 
     const { values, handleChange, setValues } = useForm({
         name: '',
@@ -24,13 +24,14 @@ function ProfileEdit() {
         setTimeout(() => nameRef.current.focus(), 0);
     };
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const { authError, isAuth, user } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
-    const isDisabledButton = () => {
+    const isDisabledButton: () => boolean = () => {
         return (
             user.name === values.name &&
             user.email === values.email &&
@@ -44,7 +45,7 @@ function ProfileEdit() {
         }
     }, [user, isAuth]);
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(userSet(values));
     };
@@ -120,6 +121,6 @@ function ProfileEdit() {
             )}
         </>
     );
-}
+};
 
 export default ProfileEdit;

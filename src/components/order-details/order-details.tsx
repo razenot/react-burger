@@ -1,9 +1,10 @@
 import Modal from '../modal/modal';
+import { FC } from 'react';
+import { TOrderDetails } from '../../services/utils/types';
 import styles from './order-details.module.css';
 import doneImg from './../../images/done.svg';
-import PropTypes from 'prop-types';
 
-function OrderDetails({ handleClose, orderId }) {
+const OrderDetails: FC<TOrderDetails> = ({ handleClose, orderId }) => {
     return (
         <div className={styles.overflow}>
             <Modal handleClose={handleClose}>
@@ -29,11 +30,6 @@ function OrderDetails({ handleClose, orderId }) {
             </Modal>
         </div>
     );
-}
-
-OrderDetails.propTypes = {
-    handleClose: PropTypes.func,
-    orderId: PropTypes.number,
 };
 
 export default OrderDetails;

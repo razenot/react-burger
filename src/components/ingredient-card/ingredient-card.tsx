@@ -1,27 +1,31 @@
-import { useDrag } from 'react-dnd';
+import { FC } from 'react';
+import { DragSourceHookSpec, DragSourceMonitor, useDrag } from 'react-dnd';
 import {
     CurrencyIcon,
     Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { propIngredientData } from './../../services/prop-types-pattern';
-import styles from './ingredient-card.module.css';
 import { Link, useLocation } from 'react-router-dom';
+import {
+    IIngredientCard,
+    TIngredient,
+    TModalState,
+} from '../../services/utils/types';
+import styles from './ingredient-card.module.css';
 
-function IngredientCard({ ingredient, count }) {
+const IngredientCard: FC<IIngredientCard> = ({ ingredient, count }) => {
     const location = useLocation();
 
     const [{ opacity }, ref] = useDrag({
         type: ingredient.type === 'bun' ? 'bun' : 'ingredient',
         item: ingredient,
-        collect: (monitor) => ({
+        collect: (monitor: DragSourceMonitor) => ({
             opacity: monitor.isDragging() ? 0.3 : 1,
         }),
     });
 
     return (
         <>
-            <Link
+            <Link<TModalState>
                 key={ingredient._id}
                 to={{
                     pathname: `/ingredients/${ingredient._id}`,
@@ -53,11 +57,6 @@ function IngredientCard({ ingredient, count }) {
             </Link>
         </>
     );
-}
-
-IngredientCard.propTypes = {
-    ingredient: propIngredientData.isRequired,
-    count: PropTypes.number,
 };
 
 export default IngredientCard;

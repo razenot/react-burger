@@ -1,8 +1,13 @@
-import { Redirect, Route } from 'react-router-dom';
+import { FC, ReactNode } from 'react';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Loader } from '../../ui/loader/loader';
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute: FC<RouteProps & { children?: ReactNode }> = ({
+    children,
+    ...rest
+}) => {
+    // @ts-ignore: Unreachable code error
     const { isAuth, isCheckedUser } = useSelector((state) => state.authReducer);
 
     if (localStorage.getItem('accessToken')) {
@@ -28,4 +33,4 @@ export function ProtectedRoute({ children, ...rest }) {
             }
         />
     );
-}
+};

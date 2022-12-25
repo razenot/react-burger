@@ -1,21 +1,26 @@
 import { forwardRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { propIngredientData } from './../../services/prop-types-pattern';
 import IngredientCard from '../ingredient-card/ingredient-card';
+import { TIngredient, TIngredientsGroup } from '../../services/utils/types';
 import styles from './ingredients-group.module.css';
 
-const IngredientsGroup = forwardRef(
+export type TConstructorItems = {
+    string: number;
+};
+
+const IngredientsGroup = forwardRef<HTMLDivElement, TIngredientsGroup>(
     ({ groupType, groupName, ingredients }, ref) => {
         const constructorItems = useSelector(
+            // @ts-ignore: Unreachable code error
             (state) => state.constructorReducer
         );
+
         const countIngredient = useMemo(() => {
-            const count = {};
+            const count: { [name: string]: number } = {};
             if (groupType === 'buns') {
                 if (constructorItems.bun) count[constructorItems.bun._id] = 2;
             } else {
-                constructorItems.ingredients.forEach((item) => {
+                constructorItems.ingredients.forEach((item: TIngredient) => {
                     count[item._id] =
                         item._id in count ? count[item._id] + 1 : 1;
                 });
@@ -31,7 +36,7 @@ const IngredientsGroup = forwardRef(
                     ref={ref}
                 >
                     {ingredients.length ? (
-                        ingredients.map((item) => (
+                        ingredients.map((item: TIngredient) => (
                             <IngredientCard
                                 key={item._id}
                                 ingredient={item}
@@ -46,11 +51,5 @@ const IngredientsGroup = forwardRef(
         );
     }
 );
-
-IngredientsGroup.propTypes = {
-    groupType: PropTypes.string,
-    groupName: PropTypes.string,
-    ingredients: PropTypes.arrayOf(propIngredientData.isRequired),
-};
 
 export default IngredientsGroup;

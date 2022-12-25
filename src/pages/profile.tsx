@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import ProfileEdit from '../components/profile-edit/profile-edit';
 import ProfileMenu from '../components/profile-menu/profile-menu';
 import styles from './style.module.css';
 
-export function ProfilePage() {
+export const ProfilePage: FC = () => {
     return (
         <div className={styles.profileWrapper}>
             <div className={`${styles.leftSidebar} mr-15`}>
@@ -13,4 +14,4 @@ export function ProfilePage() {
             </div>
         </div>
     );
-}
+};

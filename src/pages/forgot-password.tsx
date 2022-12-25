@@ -1,26 +1,28 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent, FC } from 'react';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import {
     EmailInput,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { requestForgotPassword } from './../services/utils/burger-api';
+import { requestForgotPassword } from '../services/utils/burger-api';
 import styles from './style.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../ui/loader/loader';
 import { AUTH_FORGOT_PASSWORD_SUCCESS } from '../services/redux/auth/action';
+import { TModalState } from '../services/utils/types';
 
-export function ForgotPasswordPage() {
-    const [email, setEmail] = useState('');
+export const ForgotPasswordPage: FC = () => {
+    const [email, setEmail] = useState<string>('');
 
-    const onChangeEmail = (e) => {
+    const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
 
-    const location = useLocation();
-    const history = useHistory();
-    const dispatch = useDispatch();
+    const location = useLocation<TModalState>();
+    const history = useHistory<TModalState>();
+    const dispatch = useDispatch<any>();
 
+    // @ts-ignore: Unreachable code error
     const { isAuth, isCheckedUser } = useSelector((state) => state.authReducer);
 
     if (localStorage.getItem('accessToken')) {
@@ -33,7 +35,7 @@ export function ForgotPasswordPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         requestForgotPassword(email)
             .then(() => {
@@ -76,7 +78,7 @@ export function ForgotPasswordPage() {
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Вспомнили пароль? </span>
-                        <Link to='/login' className={styles.link}>
+                        <Link<TModalState> to='/login' className={styles.link}>
                             Войти
                         </Link>
                     </p>
@@ -84,4 +86,4 @@ export function ForgotPasswordPage() {
             </div>
         </div>
     );
-}
+};

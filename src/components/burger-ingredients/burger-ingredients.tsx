@@ -1,16 +1,15 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect, useRef, useMemo, FC } from 'react';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
-import { getIngredients } from '../../services/redux/ingredients/action';
-import { Loader } from './../../ui/loader/loader';
+import { Loader } from '../../ui/loader/loader';
 import styles from './burger-ingredients.module.css';
+import { TIngredient } from '../../services/utils/types';
 
-function BurgerIngredients() {
-    const dispatch = useDispatch();
-
+const BurgerIngredients: FC = () => {
     const { ingredients, loading, error } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.ingredientsReducer
     );
 
@@ -19,25 +18,25 @@ function BurgerIngredients() {
     }, [error]);
 
     const buns = useMemo(
-        () => ingredients.filter((item) => item.type === 'bun'),
+        () => ingredients.filter((item: TIngredient) => item.type === 'bun'),
         [ingredients]
     );
 
     const sauces = useMemo(
-        () => ingredients.filter((item) => item.type === 'sauce'),
+        () => ingredients.filter((item: TIngredient) => item.type === 'sauce'),
         [ingredients]
     );
 
     const mains = useMemo(
-        () => ingredients.filter((item) => item.type === 'main'),
+        () => ingredients.filter((item: TIngredient) => item.type === 'main'),
         [ingredients]
     );
 
-    const [current, setCurrent] = useState('bun');
+    const [current, setCurrent] = useState<string>('bun');
 
-    const bunsContainerRef = useRef();
-    const saucesContainerRef = useRef();
-    const mainsContainerRef = useRef();
+    const bunsContainerRef = useRef<HTMLLIElement>(null!);
+    const saucesContainerRef = useRef<HTMLLIElement>(null!);
+    const mainsContainerRef = useRef<HTMLLIElement>(null!);
 
     const [bunsRef, bunsView] = useInView({
         threshold: 0,
@@ -65,6 +64,7 @@ function BurgerIngredients() {
         <div className='mr-5'>
             <div className={styles.tabs}>
                 <Tab
+                    value='bun'
                     active={current === 'bun'}
                     onClick={() =>
                         bunsContainerRef.current.scrollIntoView({
@@ -75,6 +75,7 @@ function BurgerIngredients() {
                     Булки
                 </Tab>
                 <Tab
+                    value='sauce'
                     active={current === 'sauce'}
                     onClick={() =>
                         saucesContainerRef.current.scrollIntoView({
@@ -85,6 +86,7 @@ function BurgerIngredients() {
                     Соусы
                 </Tab>
                 <Tab
+                    value='main'
                     active={current === 'main'}
                     onClick={() =>
                         mainsContainerRef.current.scrollIntoView({
@@ -142,6 +144,6 @@ function BurgerIngredients() {
             )}
         </div>
     );
-}
+};
 
 export default BurgerIngredients;

@@ -12,20 +12,21 @@ import {
     ProfilePage,
     IngredientsPage,
     NotFound404,
-} from './../../pages';
+} from '../../pages';
 import globalStyles from './../../global.module.css';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { useDispatch } from 'react-redux';
 import { userGet } from '../../services/redux/auth/action';
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { getIngredients } from '../../services/redux/ingredients/action';
+import { TModalState } from '../../services/utils/types';
 
-function App() {
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const history = useHistory();
+const App: FC = () => {
+    const dispatch: any = useDispatch();
+    const location = useLocation<TModalState>();
+    const history = useHistory<TModalState>();
     const background = location.state && location.state.background;
 
     const handleModalClose = () => {
@@ -102,6 +103,6 @@ function App() {
             </main>
         </div>
     );
-}
+};
 
 export default App;

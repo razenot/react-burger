@@ -1,25 +1,30 @@
+import { FC, FormEvent } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import {
+    Input,
     EmailInput,
     PasswordInput,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './style.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../services/redux/auth/action';
+import { userRegister } from '../services/redux/auth/action';
 import { Loader } from '../ui/loader/loader';
 import { useForm } from '../services/hooks/useForm';
+import { TModalState } from '../services/utils/types';
 
-export function LoginPage() {
+export const RegisterPage: FC = () => {
     const { values, handleChange } = useForm({
+        name: '',
         email: '',
         password: '',
     });
 
-    const dispatch = useDispatch();
-    const location = useLocation();
+    const dispatch = useDispatch<any>();
+    const location = useLocation<TModalState>();
 
     const { authError, authLoading, isAuth, isCheckedUser } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
@@ -33,16 +38,26 @@ export function LoginPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userLogin(values));
+        dispatch(userRegister(values));
     };
 
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
-                <div className='text text_type_main-medium'>Вход</div>
+                <div className='text text_type_main-medium'>Регистрация</div>
                 <form onSubmit={onSubmit}>
+                    <div className='mt-6'>
+                        <Input
+                            type={'text'}
+                            placeholder={'Имя'}
+                            onChange={handleChange}
+                            value={values.name}
+                            size={'default'}
+                            name={'name'}
+                        />
+                    </div>
                     <div className='mt-6'>
                         <EmailInput
                             onChange={handleChange}
@@ -75,27 +90,25 @@ export function LoginPage() {
                             htmlType='submit'
                             type='primary'
                             size='medium'
-                            disabled={!values.email || !values.password}
+                            disabled={
+                                !values.email ||
+                                !values.password ||
+                                !values.name
+                            }
                         >
-                            Войти
+                            Зарегистрироваться
                         </Button>
                     </div>
                 </form>
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
-                        <span>Вы — новый пользователь? </span>
-                        <Link to='/register' className={styles.link}>
-                            Зарегистрироваться
-                        </Link>
-                    </p>
-                    <p className='text text_type_main-default text_color_inactive mt-4'>
-                        <span>Забыли пароль? </span>
-                        <Link to='/forgot-password' className={styles.link}>
-                            Восстановить пароль
+                        <span>Уже зарегистрированы? </span>
+                        <Link<TModalState> to='/login' className={styles.link}>
+                            Войти
                         </Link>
                     </p>
                 </div>
             </div>
         </div>
     );
-}
+};

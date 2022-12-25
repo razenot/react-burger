@@ -1,10 +1,10 @@
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-const request = (url, options = null) => {
+const request = (url: string, options: any = null) => {
     return fetch(url, options)
         .then(checkResponse)
         .then((resData) => {
@@ -13,10 +13,10 @@ const request = (url, options = null) => {
         });
 };
 
-export const requestWithRefresh = async (url, options) => {
+export const requestWithRefresh = async (url: string, options: any) => {
     try {
         return await request(url, options);
-    } catch (err) {
+    } catch (err: any) {
         console.log('refresh err catch', err);
         if (err.message === 'jwt expired') {
             const refreshData = await refreshToken();
@@ -38,7 +38,7 @@ export const getIngredients = () => {
     return request(`${BURGER_API_URL}/ingredients`);
 };
 
-export const sendOrder = (ingredients) => {
+export const sendOrder = (ingredients: Array<string>) => {
     const data = {
         method: 'POST',
         headers: {
@@ -51,7 +51,7 @@ export const sendOrder = (ingredients) => {
     return request(`${BURGER_API_URL}/orders`, data);
 };
 
-export const requestForgotPassword = (email) => {
+export const requestForgotPassword = (email: string) => {
     const data = {
         method: 'POST',
         headers: {
@@ -63,7 +63,7 @@ export const requestForgotPassword = (email) => {
     return request(`${BURGER_API_URL}/password-reset`, data);
 };
 
-export const requestResetPassword = (password, code) => {
+export const requestResetPassword = (password: string, code: string) => {
     const data = {
         method: 'POST',
         headers: {
@@ -75,7 +75,7 @@ export const requestResetPassword = (password, code) => {
     return request(`${BURGER_API_URL}/password-reset/reset`, data);
 };
 
-export const requestLogin = (email, password) => {
+export const requestLogin = (email: string, password: string) => {
     const data = {
         method: 'POST',
         headers: {
@@ -87,7 +87,11 @@ export const requestLogin = (email, password) => {
     return request(`${BURGER_API_URL}/auth/login`, data);
 };
 
-export const requestRegister = (email, password, name) => {
+export const requestRegister = (
+    email: string,
+    password: string,
+    name: string
+) => {
     const data = {
         method: 'POST',
         headers: {
@@ -123,7 +127,11 @@ export const requestGetUser = () => {
     return requestWithRefresh(`${BURGER_API_URL}/auth/user`, data);
 };
 
-export const requestSetUser = (email, password, name) => {
+export const requestSetUser = (
+    email: string,
+    password: string,
+    name: string
+) => {
     const data = {
         method: 'PATCH',
         headers: {

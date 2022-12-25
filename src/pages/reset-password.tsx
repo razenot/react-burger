@@ -1,27 +1,30 @@
+import { FC, FormEvent } from 'react';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import {
     PasswordInput,
     Input,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { requestResetPassword } from './../services/utils/burger-api';
-import styles from './style.module.css';
+import { requestResetPassword } from '../services/utils/burger-api';
 import { Loader } from '../ui/loader/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_RESET_PASSWORD_SUCCESS } from '../services/redux/auth/action';
 import { useForm } from '../services/hooks/useForm';
+import styles from './style.module.css';
+import { TModalState } from '../services/utils/types';
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage: FC = () => {
     const { values, handleChange } = useForm({
         password: '',
         code: '',
     });
 
-    const history = useHistory();
-    const location = useLocation();
-    const dispatch = useDispatch();
+    const history = useHistory<TModalState>();
+    const location = useLocation<TModalState>();
+    const dispatch = useDispatch<any>();
 
     const { isAuth, isCheckedUser, isResetPassword } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
@@ -38,7 +41,7 @@ export function ResetPasswordPage() {
         return <Redirect to={location.state?.from || '/'} />;
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         requestResetPassword(values.password, values.code)
             .then(() => {
@@ -91,7 +94,7 @@ export function ResetPasswordPage() {
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Вспомнили пароль? </span>
-                        <Link to='/login' className={styles.link}>
+                        <Link<TModalState> to='/login' className={styles.link}>
                             Войти
                         </Link>
                     </p>
@@ -99,4 +102,4 @@ export function ResetPasswordPage() {
             </div>
         </div>
     );
-}
+};

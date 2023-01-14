@@ -1,20 +1,23 @@
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop, useDrag, DropTargetMonitor } from 'react-dnd';
 import {
     ConstructorElement,
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { propIngredientData } from './../../services/prop-types-pattern';
 import {
     CONSTRUCTOR_REMOVE,
     CONSTRUCTOR_REBUILD,
 } from '../../services/redux/constructor/action';
 import styles from './../burger-constructor/burger-constructor.module.css';
+import { TConstructorIngredient } from '../../services/utils/types';
+import { Identifier, XYCoord } from 'dnd-core';
 
-const ConstructorIngredient = ({ ingredient, index }) => {
-    const dispatch = useDispatch();
+const ConstructorIngredient: FC<TConstructorIngredient> = ({
+    ingredient,
+    index,
+}) => {
+    const dispatch = useDispatch<any>();
 
     const removeIngredients = () => {
         dispatch({
@@ -23,7 +26,7 @@ const ConstructorIngredient = ({ ingredient, index }) => {
         });
     };
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null!);
 
     const [{ itemDragging }, drag] = useDrag({
         type: 'sort',
@@ -35,19 +38,24 @@ const ConstructorIngredient = ({ ingredient, index }) => {
         }),
     });
 
-    const [{ handlerItemId }, drop] = useDrop({
+    const [{ handlerItemId }, drop] = useDrop<
+        TConstructorIngredient,
+        void,
+        { handlerItemId: Identifier | null }
+    >({
         accept: 'sort',
         collect(monitor) {
             return {
                 handlerItemId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item, monitor: DropTargetMonitor) {
             if (item.index === index) return;
 
             const bounding = ref.current?.getBoundingClientRect();
             const centerDrag = (bounding.bottom - bounding.top) / 2;
-            const positionDrag = monitor.getClientOffset().y - bounding.top;
+            const clientOffset = monitor.getClientOffset();
+            const positionDrag = (clientOffset as XYCoord).y - bounding.top;
 
             if (
                 (item.index < index && positionDrag < centerDrag) ||
@@ -66,7 +74,7 @@ const ConstructorIngredient = ({ ingredient, index }) => {
         },
     });
 
-    const opacity = itemDragging ? 0.3 : 1;
+    const opacity: number = itemDragging ? 0.3 : 1;
     drag(drop(ref));
 
     return (
@@ -89,11 +97,6 @@ const ConstructorIngredient = ({ ingredient, index }) => {
             </div>
         </div>
     );
-};
-
-ConstructorIngredient.propTypes = {
-    ingredient: propIngredientData.isRequired,
-    index: PropTypes.number,
 };
 
 export default ConstructorIngredient;

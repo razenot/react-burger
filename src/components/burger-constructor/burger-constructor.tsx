@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import {
     ConstructorElement,
@@ -13,32 +14,36 @@ import {
     constructorAdd,
 } from '../../services/redux/constructor/action';
 import { sendOrder, ORDER_RESET } from '../../services/redux/order/action';
+import { TIngredient, TModalState } from '../../services/utils/types';
 import { Loader } from '../../ui/loader/loader';
 import styles from './burger-constructor.module.css';
-import { useHistory } from 'react-router-dom';
 
-function BurgerConstructor() {
-    const [total, setTotal] = useState(0);
+const BurgerConstructor: FC = () => {
+    const [total, setTotal] = useState<number>(0);
 
-    const [visibleOrderDetail, setVisibleOrderDetail] = useState(false);
+    const [visibleOrderDetail, setVisibleOrderDetail] =
+        useState<boolean>(false);
 
+    // @ts-ignore: Unreachable code error
     const { isAuth } = useSelector((state) => state.authReducer);
 
-    const dispatch = useDispatch();
-
-    const history = useHistory();
-
     const { orderFields, loading, error } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.orderReducer
     );
 
     const { ingredients, bun } = useSelector(
+        // @ts-ignore: Unreachable code error
         (state) => state.constructorReducer
     );
 
+    const dispatch = useDispatch<any>();
+
+    const history = useHistory<TModalState>();
+
     useEffect(() => {
-        let price = ingredients.length
-            ? ingredients.reduce((a, b) => a + b.price, 0)
+        let price: number = ingredients.length
+            ? ingredients.reduce((a: number, b: TIngredient) => a + b.price, 0)
             : 0;
         price += bun ? bun.price * 2 : 0;
         setTotal(price);
@@ -60,14 +65,12 @@ function BurgerConstructor() {
 
     const handleCreateOrder = () => {
         if (localStorage.getItem('accessToken') && isAuth) {
-            let toOrder = [];
-            toOrder.push(bun._id);
-            toOrder = toOrder.concat(
-                ingredients.map((item) => {
-                    return item._id;
-                })
-            );
-            toOrder.push(bun._id);
+            let toOrder: string[] = [];
+            toOrder = [
+                bun._id,
+                ...ingredients.map((ingredient: TIngredient) => ingredient._id),
+                bun._id,
+            ];
             dispatch(sendOrder(toOrder));
             setVisibleOrderDetail(true);
         } else {
@@ -77,26 +80,26 @@ function BurgerConstructor() {
 
     const [, dropBunTarget] = useDrop({
         accept: 'bun',
-        drop(item) {
+        drop(item: TIngredient) {
             moveIngredients(item);
         },
     });
 
     const [, dropIngredientTarget] = useDrop({
         accept: 'ingredient',
-        drop(item) {
+        drop(item: TIngredient) {
             moveIngredients(item);
         },
     });
 
-    const moveIngredients = (ingredient) => {
+    const moveIngredients = (ingredient: TIngredient) => {
         dispatch(constructorAdd(ingredient));
     };
 
     return (
         <div className={`${styles.burgerConstructor} ml-5 mt-5`}>
             {error ? (
-                <div class=' mt-10 text text_type_main-medium'>
+                <div className='mt-10 text text_type_main-medium'>
                     Произошла ошибка, перезагрузите страницу.
                 </div>
             ) : (
@@ -140,13 +143,15 @@ function BurgerConstructor() {
                                     </div>
                                 </div>
                             ) : (
-                                ingredients.map((item, index) => (
-                                    <ConstructorIngredient
-                                        key={item.id}
-                                        ingredient={item}
-                                        index={index}
-                                    />
-                                ))
+                                ingredients.map(
+                                    (item: TIngredient, index: number) => (
+                                        <ConstructorIngredient
+                                            key={item.id}
+                                            ingredient={item}
+                                            index={index}
+                                        />
+                                    )
+                                )
                             )}
                         </div>
 
@@ -201,6 +206,6 @@ function BurgerConstructor() {
             )}
         </div>
     );
-}
+};
 
 export default BurgerConstructor;

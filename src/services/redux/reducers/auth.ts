@@ -1,3 +1,5 @@
+import { TUserData } from '../../utils/types';
+import { TAuthActions } from '../actions/creator/auth';
 import {
     AUTH_LOGIN_GET,
     AUTH_LOGIN_SUCCESS,
@@ -11,10 +13,19 @@ import {
     AUTH_USER_ERROR,
     AUTH_FORGOT_PASSWORD_SUCCESS,
     AUTH_RESET_PASSWORD_SUCCESS,
-} from './action';
+} from '../constants/auth';
 
-const initialState = {
-    user: {},
+type TAuthState = {
+    readonly user: TUserData | null;
+    readonly isAuth: boolean;
+    readonly authLoading: boolean;
+    readonly authError: string | boolean;
+    readonly isCheckedUser: boolean;
+    readonly isResetPassword: boolean;
+};
+
+const initialState: TAuthState = {
+    user: null,
     isAuth: false,
     authLoading: false,
     authError: false,
@@ -22,7 +33,10 @@ const initialState = {
     isResetPassword: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (
+    state = initialState,
+    action: TAuthActions
+): TAuthState => {
     switch (action.type) {
         case AUTH_REGISTER_GET:
         case AUTH_LOGIN_GET: {

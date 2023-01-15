@@ -6,10 +6,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { requestForgotPassword } from '../services/utils/burger-api';
 import styles from './style.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { forgotPasswordCreator } from '../services/redux/actions/creator/auth';
 import { Loader } from '../ui/loader/loader';
-import { AUTH_FORGOT_PASSWORD_SUCCESS } from '../services/redux/auth/action';
 import { TModalState } from '../services/utils/types';
+import { useDispatch, useSelector } from '../services/hooks/redux-hook';
 
 export const ForgotPasswordPage: FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -20,9 +20,8 @@ export const ForgotPasswordPage: FC = () => {
 
     const location = useLocation<TModalState>();
     const history = useHistory<TModalState>();
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
-    // @ts-ignore: Unreachable code error
     const { isAuth, isCheckedUser } = useSelector((state) => state.authReducer);
 
     if (localStorage.getItem('accessToken')) {
@@ -39,9 +38,7 @@ export const ForgotPasswordPage: FC = () => {
         e.preventDefault();
         requestForgotPassword(email)
             .then(() => {
-                dispatch({
-                    type: AUTH_FORGOT_PASSWORD_SUCCESS,
-                });
+                dispatch(forgotPasswordCreator());
                 history.push({ pathname: '/reset-password' });
             })
             .catch((e) => {

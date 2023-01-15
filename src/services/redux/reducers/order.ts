@@ -1,17 +1,28 @@
+import { TOrderResponse } from '../../utils/types';
+import { TOrderActions } from '../actions/creator/order';
 import {
     SEND_ORDER_REQUEST,
     SEND_ORDER_SUCCESS,
     SEND_ORDER_FAILED,
     ORDER_RESET,
-} from './action';
+} from '../constants/order';
 
-const initialState = {
-    orderFields: {},
+type TOrderState = {
+    orderFields: TOrderResponse | null;
+    loading: boolean;
+    error: string | boolean;
+};
+
+const initialState: TOrderState = {
+    orderFields: null,
     loading: false,
     error: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (
+    state = initialState,
+    action: TOrderActions
+): TOrderState => {
     switch (action.type) {
         case SEND_ORDER_REQUEST: {
             return {

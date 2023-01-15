@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/hooks/redux-hook';
 import { useDrop } from 'react-dnd';
 import {
     ConstructorElement,
@@ -9,11 +9,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
-import {
-    CONSTRUCTOR_RESET,
-    constructorAdd,
-} from '../../services/redux/constructor/action';
-import { sendOrder, ORDER_RESET } from '../../services/redux/order/action';
+import { constructorResetCreator } from '../../services/redux/actions/creator/constructor';
+import { constructorAdd } from '../../services/redux/actions/constructor';
+import { orderResetCreator } from '../../services/redux/actions/creator/order';
+import { sendOrder } from '../../services/redux/actions/order';
 import { TIngredient, TModalState } from '../../services/utils/types';
 import { Loader } from '../../ui/loader/loader';
 import styles from './burger-constructor.module.css';
@@ -24,20 +23,17 @@ const BurgerConstructor: FC = () => {
     const [visibleOrderDetail, setVisibleOrderDetail] =
         useState<boolean>(false);
 
-    // @ts-ignore: Unreachable code error
     const { isAuth } = useSelector((state) => state.authReducer);
 
     const { orderFields, loading, error } = useSelector(
-        // @ts-ignore: Unreachable code error
         (state) => state.orderReducer
     );
 
     const { ingredients, bun } = useSelector(
-        // @ts-ignore: Unreachable code error
         (state) => state.constructorReducer
     );
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     const history = useHistory<TModalState>();
 
@@ -50,21 +46,17 @@ const BurgerConstructor: FC = () => {
     }, [ingredients, bun]);
 
     useEffect(() => {
-        if (error?.message) alert(error.message);
+        if (error) alert(error);
     }, [error]);
 
     const handleCloseOrderDetail = () => {
-        dispatch({
-            type: ORDER_RESET,
-        });
-        dispatch({
-            type: CONSTRUCTOR_RESET,
-        });
+        dispatch(orderResetCreator());
+        dispatch(constructorResetCreator());
         if (ingredients.length) setVisibleOrderDetail(false);
     };
 
     const handleCreateOrder = () => {
-        if (localStorage.getItem('accessToken') && isAuth) {
+        if (localStorage.getItem('accessToken') && isAuth && bun != null) {
             let toOrder: string[] = [];
             toOrder = [
                 bun._id,
@@ -196,10 +188,10 @@ const BurgerConstructor: FC = () => {
                         <Loader size='large' />
                     )}
 
-                    {visibleOrderDetail && orderFields.success && (
+                    {visibleOrderDetail && orderFields?.number && (
                         <OrderDetails
                             handleClose={handleCloseOrderDetail}
-                            orderId={orderFields?.order?.number}
+                            orderId={orderFields?.number}
                         />
                     )}
                 </>

@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { TIngredient, TIngredientsGroup } from '../../services/utils/types';
 import styles from './ingredients-group.module.css';
+import { useSelector } from '../../services/hooks/redux-hook';
 
 export type TConstructorItems = {
     string: number;
@@ -11,7 +11,6 @@ export type TConstructorItems = {
 const IngredientsGroup = forwardRef<HTMLDivElement, TIngredientsGroup>(
     ({ groupType, groupName, ingredients }, ref) => {
         const constructorItems = useSelector(
-            // @ts-ignore: Unreachable code error
             (state) => state.constructorReducer
         );
 

@@ -7,11 +7,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { requestResetPassword } from '../services/utils/burger-api';
 import { Loader } from '../ui/loader/loader';
-import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_RESET_PASSWORD_SUCCESS } from '../services/redux/auth/action';
+import { resetPasswordCreator } from '../services/redux/actions/creator/auth';
 import { useForm } from '../services/hooks/useForm';
 import styles from './style.module.css';
 import { TModalState } from '../services/utils/types';
+import { useDispatch, useSelector } from '../services/hooks/redux-hook';
 
 export const ResetPasswordPage: FC = () => {
     const { values, handleChange } = useForm({
@@ -21,10 +21,9 @@ export const ResetPasswordPage: FC = () => {
 
     const history = useHistory<TModalState>();
     const location = useLocation<TModalState>();
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     const { isAuth, isCheckedUser, isResetPassword } = useSelector(
-        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
@@ -45,9 +44,7 @@ export const ResetPasswordPage: FC = () => {
         e.preventDefault();
         requestResetPassword(values.password, values.code)
             .then(() => {
-                dispatch({
-                    type: AUTH_RESET_PASSWORD_SUCCESS,
-                });
+                dispatch(resetPasswordCreator());
                 history.push({ pathname: '/login' });
             })
             .catch((e) => {

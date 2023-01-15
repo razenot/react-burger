@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { constructorReducer } from './constructor/reducer';
-import { ingredientsReducer } from './ingredients/reducer';
-import { orderReducer } from './order/reducer';
-import { authReducer } from './auth/reducer';
+import { constructorReducer } from './constructor';
+import { ingredientsReducer } from './ingredients';
+import { orderReducer } from './order';
+import { authReducer } from './auth';
 
 export default combineReducers({
     constructorReducer: constructorReducer,

@@ -1,29 +1,26 @@
 import { FC, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks/redux-hook';
 import { useDrop, useDrag, DropTargetMonitor } from 'react-dnd';
 import {
     ConstructorElement,
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import {
-    CONSTRUCTOR_REMOVE,
-    CONSTRUCTOR_REBUILD,
-} from '../../services/redux/constructor/action';
 import styles from './../burger-constructor/burger-constructor.module.css';
 import { TConstructorIngredient } from '../../services/utils/types';
 import { Identifier, XYCoord } from 'dnd-core';
+import {
+    constructorRebuildCreator,
+    constructorRemoveCreator,
+} from '../../services/redux/actions/creator/constructor';
 
 const ConstructorIngredient: FC<TConstructorIngredient> = ({
     ingredient,
     index,
 }) => {
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     const removeIngredients = () => {
-        dispatch({
-            type: CONSTRUCTOR_REMOVE,
-            payload: ingredient.id,
-        });
+        dispatch(constructorRemoveCreator(ingredient.id));
     };
 
     const ref = useRef<HTMLDivElement>(null!);
@@ -63,13 +60,7 @@ const ConstructorIngredient: FC<TConstructorIngredient> = ({
             )
                 return;
 
-            dispatch({
-                type: CONSTRUCTOR_REBUILD,
-                payload: {
-                    after: item.index,
-                    before: index,
-                },
-            });
+            dispatch(constructorRebuildCreator(item.index, index));
             item.index = index;
         },
     });

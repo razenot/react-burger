@@ -15,16 +15,16 @@ import {
 } from '../../pages';
 import globalStyles from './../../global.module.css';
 import { ProtectedRoute } from '../protected-route/protected-route';
-import { useDispatch } from 'react-redux';
-import { userGet } from '../../services/redux/auth/action';
+import { userGet } from '../../services/redux/actions/auth';
 import { useEffect, FC } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { getIngredients } from '../../services/redux/ingredients/action';
+import { getIngredients } from '../../services/redux/actions/ingredients';
 import { TModalState } from '../../services/utils/types';
+import { useDispatch } from '../../services/hooks/redux-hook';
 
 const App: FC = () => {
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const location = useLocation<TModalState>();
     const history = useHistory<TModalState>();
     const background = location.state && location.state.background;

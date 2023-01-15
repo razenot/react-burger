@@ -1,15 +1,14 @@
 import { useState, useEffect, useRef, useMemo, FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import { Loader } from '../../ui/loader/loader';
 import styles from './burger-ingredients.module.css';
 import { TIngredient } from '../../services/utils/types';
+import { useSelector } from '../../services/hooks/redux-hook';
 
 const BurgerIngredients: FC = () => {
     const { ingredients, loading, error } = useSelector(
-        // @ts-ignore: Unreachable code error
         (state) => state.ingredientsReducer
     );
 

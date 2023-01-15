@@ -1,12 +1,12 @@
-import { useDispatch } from 'react-redux';
 import { SyntheticEvent, FC } from 'react';
 
 import { NavLink } from 'react-router-dom';
-import { userLogout } from '../../services/redux/auth/action';
+import { useDispatch } from '../../services/hooks/redux-hook';
+import { userLogout } from '../../services/redux/actions/auth';
 import styles from './profile-menu.module.css';
 
 const ProfileMenu: FC = () => {
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     const onLogout = (e: SyntheticEvent<Element, Event>) => {
         e.preventDefault();

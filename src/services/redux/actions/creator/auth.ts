@@ -86,16 +86,12 @@ export const authLoginGetCreator = (): IAuthLoginGetAction => ({
     type: AUTH_LOGIN_GET,
 });
 
-export const authLoginSuccessCreator = (
-    data: TLoginSuccess
-): IAuthLoginSuccessAction => ({
+export const authLoginSuccessCreator = (data: TLoginSuccess): IAuthLoginSuccessAction => ({
     type: AUTH_LOGIN_SUCCESS,
     payload: data,
 });
 
-export const authLoginErrorCreator = (
-    error: string
-): IAuthLoginErrorAction => ({
+export const authLoginErrorCreator = (error: string): IAuthLoginErrorAction => ({
     type: AUTH_LOGIN_ERROR,
     payload: error,
 });
@@ -104,16 +100,12 @@ export const authRegisterGetCreator = (): IAuthRegisterGetAction => ({
     type: AUTH_REGISTER_GET,
 });
 
-export const authRegisterSuccessCreator = (
-    data: TLoginSuccess
-): IAuthRegisterSuccessAction => ({
+export const authRegisterSuccessCreator = (data: TLoginSuccess): IAuthRegisterSuccessAction => ({
     type: AUTH_REGISTER_SUCCESS,
     payload: data,
 });
 
-export const authRegisterErrorCreator = (
-    error: string
-): IAuthRegisterErrorAction => ({
+export const authRegisterErrorCreator = (error: string): IAuthRegisterErrorAction => ({
     type: AUTH_REGISTER_ERROR,
     payload: error,
 });
@@ -126,9 +118,7 @@ export const authUserRequestCreator = (): IAuthUserRequestAction => ({
     type: AUTH_USER_REQUEST,
 });
 
-export const authUserSetSuccessCreator = (
-    data: TUserRequest
-): IAuthUserSetSuccessAction => ({
+export const authUserSetSuccessCreator = (data: TUserRequest): IAuthUserSetSuccessAction => ({
     type: AUTH_USER_SET_SUCCESS,
     payload: data,
 });

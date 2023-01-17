@@ -26,16 +26,10 @@ const ProfileEdit: FC = () => {
 
     const dispatch = useDispatch();
 
-    const { authError, isAuth, user } = useSelector(
-        (state) => state.authReducer
-    );
+    const { authError, isAuth, user } = useSelector((state) => state.authReducer);
 
     const isDisabledButton: () => boolean = () => {
-        return (
-            user?.name === values.name &&
-            user?.email === values.email &&
-            !values.password
-        );
+        return user?.name === values.name && user?.email === values.email && !values.password;
     };
 
     useEffect(() => {
@@ -56,9 +50,7 @@ const ProfileEdit: FC = () => {
     return (
         <>
             {authError ? (
-                <div
-                    className={`${styles.error} mt-6 text text_type_main-default`}
-                >
+                <div className={`${styles.error} mt-6 text text_type_main-default`}>
                     {authError}
                 </div>
             ) : (

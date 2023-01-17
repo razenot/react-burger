@@ -7,7 +7,7 @@ import {
     ORDER_RESET,
 } from '../constants/order';
 
-type TOrderState = {
+export type TOrderState = {
     orderFields: TOrderResponse | null;
     loading: boolean;
     error: string | boolean;
@@ -19,10 +19,7 @@ const initialState: TOrderState = {
     error: false,
 };
 
-export const orderReducer = (
-    state = initialState,
-    action: TOrderActions
-): TOrderState => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch (action.type) {
         case SEND_ORDER_REQUEST: {
             return {

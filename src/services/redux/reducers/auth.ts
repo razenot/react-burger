@@ -33,10 +33,7 @@ const initialState: TAuthState = {
     isResetPassword: false,
 };
 
-export const authReducer = (
-    state = initialState,
-    action: TAuthActions
-): TAuthState => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case AUTH_REGISTER_GET:
         case AUTH_LOGIN_GET: {

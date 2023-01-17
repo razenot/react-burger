@@ -1,10 +1,7 @@
 import { FC, useRef } from 'react';
 import { useDispatch } from '../../services/hooks/redux-hook';
 import { useDrop, useDrag, DropTargetMonitor } from 'react-dnd';
-import {
-    ConstructorElement,
-    DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './../burger-constructor/burger-constructor.module.css';
 import { TConstructorIngredient } from '../../services/utils/types';
 import { Identifier, XYCoord } from 'dnd-core';
@@ -13,10 +10,7 @@ import {
     constructorRemoveCreator,
 } from '../../services/redux/actions/creator/constructor';
 
-const ConstructorIngredient: FC<TConstructorIngredient> = ({
-    ingredient,
-    index,
-}) => {
+const ConstructorIngredient: FC<TConstructorIngredient> = ({ ingredient, index }) => {
     const dispatch = useDispatch();
 
     const removeIngredients = () => {

@@ -10,9 +10,7 @@ export type TConstructorItems = {
 
 const IngredientsGroup = forwardRef<HTMLDivElement, TIngredientsGroup>(
     ({ groupType, groupName, ingredients }, ref) => {
-        const constructorItems = useSelector(
-            (state) => state.constructorReducer
-        );
+        const constructorItems = useSelector((state) => state.constructorReducer);
 
         const countIngredient = useMemo(() => {
             const count: { [name: string]: number } = {};
@@ -20,20 +18,16 @@ const IngredientsGroup = forwardRef<HTMLDivElement, TIngredientsGroup>(
                 if (constructorItems.bun) count[constructorItems.bun._id] = 2;
             } else {
                 constructorItems.ingredients.forEach((item: TIngredient) => {
-                    count[item._id] =
-                        item._id in count ? count[item._id] + 1 : 1;
+                    count[item._id] = item._id in count ? count[item._id] + 1 : 1;
                 });
             }
             return count;
-        }, [constructorItems]);
+        }, [constructorItems, groupType]);
 
         return (
             <>
                 <div className='text text_type_main-medium'>{groupName}</div>
-                <div
-                    className={`${styles.container} mt-6 mb-10 pl-4 pr-4`}
-                    ref={ref}
-                >
+                <div className={`${styles.container} mt-6 mb-10 pl-4 pr-4`} ref={ref}>
                     {ingredients.length ? (
                         ingredients.map((item: TIngredient) => (
                             <IngredientCard

@@ -100,3 +100,27 @@ export type TOrderResponse = {
     updatedAt: string;
     _id: string;
 };
+
+export type TServerOrders = {
+    orders: Array<TFeedOrder>;
+    total: number;
+    totalToday: number;
+    status?: boolean;
+};
+
+export type TFeedOrder = {
+    number: number;
+    _id?: string;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    status: string;
+    ingredients: ReadonlyArray<string>;
+};
+
+export type TOrderFormat = {
+    id: string;
+    image_mobile: string;
+    name: string;
+    price: number;
+};

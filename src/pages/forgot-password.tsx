@@ -1,9 +1,6 @@
 import { useState, ChangeEvent, FormEvent, FC } from 'react';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import {
-    EmailInput,
-    Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { requestForgotPassword } from '../services/utils/burger-api';
 import styles from './style.module.css';
 import { forgotPasswordCreator } from '../services/redux/actions/creator/auth';
@@ -49,9 +46,7 @@ export const ForgotPasswordPage: FC = () => {
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
-                <div className='text text_type_main-medium'>
-                    Восстановление пароля
-                </div>
+                <div className='text text_type_main-medium'>Восстановление пароля</div>
                 <form onSubmit={onSubmit}>
                     <div className='mt-6'>
                         <EmailInput
@@ -62,12 +57,7 @@ export const ForgotPasswordPage: FC = () => {
                         />
                     </div>
                     <div className='mt-6'>
-                        <Button
-                            htmlType='submit'
-                            type='primary'
-                            size='medium'
-                            disabled={!email}
-                        >
+                        <Button htmlType='submit' type='primary' size='medium' disabled={!email}>
                             Восстановить
                         </Button>
                     </div>

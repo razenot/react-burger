@@ -38,11 +38,7 @@ export const constructorReducer = (
         case CONSTRUCTOR_REMOVE: {
             return {
                 ...state,
-                ingredients: [
-                    ...state.ingredients.filter(
-                        (item) => item.id != action.payload
-                    ),
-                ],
+                ingredients: [...state.ingredients.filter((item) => item.id !== action.payload)],
             };
         }
         case CONSTRUCTOR_REBUILD: {

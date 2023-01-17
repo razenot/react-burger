@@ -31,16 +31,12 @@ export type TConstructorActions =
     | IConstructorRebuildAction
     | IConstructorResetAction;
 
-export const constructorAddCreator = (
-    data: TIngredient
-): IConstructorAddAction => ({
+export const constructorAddCreator = (data: TIngredient): IConstructorAddAction => ({
     type: CONSTRUCTOR_ADD,
     payload: data,
 });
 
-export const constructorRemoveCreator = (
-    id: number
-): IConstructorRemoveAction => ({
+export const constructorRemoveCreator = (id: number): IConstructorRemoveAction => ({
     type: CONSTRUCTOR_REMOVE,
     payload: id,
 });

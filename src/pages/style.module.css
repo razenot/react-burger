@@ -12,6 +12,12 @@
     flex-flow: column;
 }
 
+.orderDetailPage {
+    width: 640px;
+    margin: 70px auto 0;
+    flex-flow: column;
+}
+
 .container {
     text-align: center;
 }
@@ -31,7 +37,9 @@
 }
 
 .leftSidebar {
+    min-width: 320px;
     width: 320px;
+    /* width: 100%; */
 }
 
 .profileContent {

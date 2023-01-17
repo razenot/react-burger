@@ -20,18 +20,13 @@ import styles from './burger-constructor.module.css';
 const BurgerConstructor: FC = () => {
     const [total, setTotal] = useState<number>(0);
 
-    const [visibleOrderDetail, setVisibleOrderDetail] =
-        useState<boolean>(false);
+    const [visibleOrderDetail, setVisibleOrderDetail] = useState<boolean>(false);
 
     const { isAuth } = useSelector((state) => state.authReducer);
 
-    const { orderFields, loading, error } = useSelector(
-        (state) => state.orderReducer
-    );
+    const { orderFields, loading, error } = useSelector((state) => state.orderReducer);
 
-    const { ingredients, bun } = useSelector(
-        (state) => state.constructorReducer
-    );
+    const { ingredients, bun } = useSelector((state) => state.constructorReducer);
 
     const dispatch = useDispatch();
 
@@ -98,10 +93,7 @@ const BurgerConstructor: FC = () => {
                 <>
                     <div className={styles.elementsWrapper}>
                         <div className='pl-4 pr-4'>
-                            <div
-                                className={`${styles.elementContainer}`}
-                                ref={dropBunTarget}
-                            >
+                            <div className={`${styles.elementContainer}`} ref={dropBunTarget}>
                                 <div className={styles.ingredient}>
                                     {!bun ? (
                                         <div
@@ -135,15 +127,13 @@ const BurgerConstructor: FC = () => {
                                     </div>
                                 </div>
                             ) : (
-                                ingredients.map(
-                                    (item: TIngredient, index: number) => (
-                                        <ConstructorIngredient
-                                            key={item.id}
-                                            ingredient={item}
-                                            index={index}
-                                        />
-                                    )
-                                )
+                                ingredients.map((item: TIngredient, index: number) => (
+                                    <ConstructorIngredient
+                                        key={item.id}
+                                        ingredient={item}
+                                        index={index}
+                                    />
+                                ))
                             )}
                         </div>
 
@@ -166,9 +156,7 @@ const BurgerConstructor: FC = () => {
 
                     {!loading ? (
                         <div className={`${styles.orderSend} mt-10 pl-4 pr-4`}>
-                            <span
-                                className={`${styles.orderInfo} text text_type_digits-medium`}
-                            >
+                            <span className={`${styles.orderInfo} text text_type_digits-medium`}>
                                 {total}
                             </span>
                             <span className={`${styles.currencyIcon} mr-10`}>

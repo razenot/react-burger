@@ -34,9 +34,7 @@ export const orderRequestCreator = (): IOrderRequestAction => ({
     type: SEND_ORDER_REQUEST,
 });
 
-export const orderSuccessCreator = (
-    data: TOrderResponse
-): IOrderSuccessAction => ({
+export const orderSuccessCreator = (data: TOrderResponse): IOrderSuccessAction => ({
     type: SEND_ORDER_SUCCESS,
     payload: data,
 });

@@ -1,10 +1,6 @@
 import { FC, FormEvent } from 'react';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import {
-    PasswordInput,
-    Input,
-    Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { requestResetPassword } from '../services/utils/burger-api';
 import { Loader } from '../ui/loader/loader';
 import { resetPasswordCreator } from '../services/redux/actions/creator/auth';
@@ -23,17 +19,14 @@ export const ResetPasswordPage: FC = () => {
     const location = useLocation<TModalState>();
     const dispatch = useDispatch();
 
-    const { isAuth, isCheckedUser, isResetPassword } = useSelector(
-        (state) => state.authReducer
-    );
+    const { isAuth, isCheckedUser, isResetPassword } = useSelector((state) => state.authReducer);
 
     if (localStorage.getItem('accessToken')) {
         if (!isCheckedUser) {
             return <Loader size='large' />;
         }
     } else {
-        if (!isResetPassword)
-            return <Redirect to={location.state?.from || '/login'} />;
+        if (!isResetPassword) return <Redirect to={location.state?.from || '/login'} />;
     }
 
     if (isAuth) {
@@ -55,9 +48,7 @@ export const ResetPasswordPage: FC = () => {
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
-                <div className='text text_type_main-medium'>
-                    Восстановление пароля
-                </div>
+                <div className='text text_type_main-medium'>Восстановление пароля</div>
                 <form onSubmit={onSubmit}>
                     <div className='mt-6'>
                         <PasswordInput

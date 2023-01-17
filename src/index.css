@@ -2,6 +2,11 @@ body {
     background: #131316;
 }
 
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
 /* Scroll Custom */
 
 .custom-scroll::-webkit-scrollbar {

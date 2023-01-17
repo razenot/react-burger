@@ -28,9 +28,7 @@ const Modal: FC<TModal> = ({ handleClose, title, children }) => {
                 <ModalOverlay handleClose={handleClose} />
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        {title && (
-                            <p className='text text_type_main-large'>{title}</p>
-                        )}
+                        {title && <p className='text text_type_main-large'>{title}</p>}
                         <div className={styles.close} onClick={handleClose}>
                             <CloseIcon type='primary' />
                         </div>

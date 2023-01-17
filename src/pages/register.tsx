@@ -78,9 +78,7 @@ export const RegisterPage: FC = () => {
                         </div>
                     )}
                     {authError && (
-                        <div
-                            className={`${styles.error} mt-6 text text_type_main-default`}
-                        >
+                        <div className={`${styles.error} mt-6 text text_type_main-default`}>
                             {authError}
                         </div>
                     )}
@@ -89,11 +87,7 @@ export const RegisterPage: FC = () => {
                             htmlType='submit'
                             type='primary'
                             size='medium'
-                            disabled={
-                                !values.email ||
-                                !values.password ||
-                                !values.name
-                            }
+                            disabled={!values.email || !values.password || !values.name}
                         >
                             Зарегистрироваться
                         </Button>

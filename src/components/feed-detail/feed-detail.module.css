@@ -1,0 +1,28 @@
+.feedDetailWrapper {
+    width: 100%;
+    padding-top: 10px;
+}
+
+.ingredientsList {
+    max-height: 320px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    padding-right: 25px;
+}
+
+.elementContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredientItemWrap {
+    background: linear-gradient(#131316, #131316) padding-box,
+        linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+}

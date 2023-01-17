@@ -16,7 +16,7 @@ const initialState: TOrdersState = {
     orders: [],
 };
 
-export const ordersReducer = (state = initialState, action: TOrdersActions): TOrdersState => {
+export const feedReducer = (state = initialState, action: TOrdersActions): TOrdersState => {
     switch (action.type) {
         case GET_ORDERS:
             return {
@@ -27,7 +27,7 @@ export const ordersReducer = (state = initialState, action: TOrdersActions): TOr
             return {
                 ...state,
                 orders: action.payload.orders
-                    ? action.payload.orders.slice(0, 30).sort((a, b) => b.number - a.number)
+                    ? action.payload.orders.sort((a, b) => b.number - a.number).slice(0, 30)
                     : [],
                 total: action.payload.total,
                 todayTotal: action.payload.totalToday,

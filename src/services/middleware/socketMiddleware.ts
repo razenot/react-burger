@@ -8,7 +8,7 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
 
         return (next) => async (action: TWebsocketActions) => {
             const { dispatch } = store;
-            const { wsInit, onOpen, onMessage, onError, onClosed } = wsActions;
+            const { wsInit, wsSuccess, onOpen, onMessage, onError, onClosed, onClose } = wsActions;
 
             if (action.type === wsInit) {
                 socket = new WebSocket(action.payload);
@@ -16,6 +16,7 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
                 if (socket) {
                     socket.onopen = () => {
                         dispatch({ type: onOpen });
+                        dispatch({ type: wsSuccess });
                     };
 
                     socket.onerror = (event) => {
@@ -31,6 +32,10 @@ export const socketMiddleware = (wsActions: TWsActions): Middleware => {
                     socket.onclose = (event) => {
                         dispatch({ type: onClosed, payload: event });
                     };
+                }
+            } else if (action.type === onClose) {
+                if (socket) {
+                    socket.close();
                 }
             }
 

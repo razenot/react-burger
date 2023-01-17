@@ -4,7 +4,7 @@ import { ingredientsReducer } from './ingredients';
 import { orderReducer } from './order';
 import { authReducer } from './auth';
 import { wsReducer } from './ws';
-import { ordersReducer } from './orders';
+import { feedReducer } from './orders';
 
 export default combineReducers({
     constructorReducer: constructorReducer,
@@ -12,5 +12,5 @@ export default combineReducers({
     orderReducer: orderReducer,
     authReducer: authReducer,
     wsReducer: wsReducer,
-    ordersReducer: ordersReducer,
+    feedReducer: feedReducer,
 });

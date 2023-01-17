@@ -13,24 +13,30 @@ import { TWebsocketActions } from './actions/creator/ws';
 import { TOrdersActions } from './actions/creator/orders';
 import { GET_ORDERS, ADD_ORDERS } from './constants/orders';
 import {
-    WS_CONNECTION_ERROR,
     WS_CONNECTION_START,
+    WS_CONNECTION_SUCCESS,
+    WS_CONNECTION_ERROR,
+    WS_CONNECTION_CLOSE,
     WS_CONNECTION_CLOSED,
 } from './../redux/constants/ws';
 
 export type TWsActions = {
     readonly wsInit: typeof WS_CONNECTION_START;
+    readonly wsSuccess: typeof WS_CONNECTION_SUCCESS;
     readonly onOpen: typeof GET_ORDERS;
     readonly onMessage: typeof ADD_ORDERS;
     readonly onError: typeof WS_CONNECTION_ERROR;
+    readonly onClose: typeof WS_CONNECTION_CLOSE;
     readonly onClosed: typeof WS_CONNECTION_CLOSED;
 };
 
 const wsActions: TWsActions = {
     wsInit: WS_CONNECTION_START,
+    wsSuccess: WS_CONNECTION_SUCCESS,
     onOpen: GET_ORDERS,
     onMessage: ADD_ORDERS,
     onError: WS_CONNECTION_ERROR,
+    onClose: WS_CONNECTION_CLOSE,
     onClosed: WS_CONNECTION_CLOSED,
 };
 

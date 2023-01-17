@@ -25,7 +25,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { getIngredients } from '../../services/redux/actions/ingredients';
 import { TModalState } from '../../services/utils/types';
-import { useDispatch } from '../../services/hooks/redux-hook';
+import { useDispatch, useSelector } from '../../services/hooks/redux-hook';
 import { FeedDetail } from '../feed-detail/feed-detail';
 
 const App: FC = () => {

@@ -1,17 +1,21 @@
 import { FC, useEffect } from 'react';
 import { FeedDetail } from '../components/feed-detail/feed-detail';
-import { useDispatch } from '../services/hooks/redux-hook';
-import { wsConnectionClosed } from '../services/redux/actions/creator/ws';
+import { useDispatch, useSelector } from '../services/hooks/redux-hook';
+import { wsConnectionClose } from '../services/redux/actions/creator/ws';
 import { getWsOrders } from '../services/redux/actions/ws';
 import styles from './style.module.css';
 
 export const FeedDetailPage: FC = () => {
+    const { wsConnected } = useSelector((state) => state.wsReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getWsOrders());
+        if (!wsConnected) dispatch(getWsOrders());
+    }, [dispatch, wsConnected]);
+
+    useEffect(() => {
         return () => {
-            dispatch(wsConnectionClosed());
+            dispatch(wsConnectionClose());
         };
     }, [dispatch]);
 

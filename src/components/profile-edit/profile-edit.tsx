@@ -44,7 +44,7 @@ const ProfileEdit: FC = () => {
     };
 
     const onClearData = () => {
-        setValues({ name: user?.name, email: user?.email, password: '' });
+        if (user) setValues({ name: user.name, email: user.email, password: '' });
     };
 
     return (

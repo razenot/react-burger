@@ -11,7 +11,7 @@ export const FeedDetail: FC = () => {
     const { id } = useParams<{ id?: string }>();
     const { ingredients } = useSelector((state) => state.ingredientsReducer);
     const { error } = useSelector((state) => state.wsReducer);
-    const { orders } = useSelector((state) => state.ordersReducer);
+    const { orders } = useSelector((state) => state.feedReducer);
 
     const order: TFeedOrder | undefined = orders.find((item) => item._id === id);
 
@@ -20,7 +20,8 @@ export const FeedDetail: FC = () => {
 
     useEffect(() => {
         if (order?.ingredients) {
-            let resultFormat: any = syncIngredientsFormat(order?.ingredients, ingredients);
+            let resultFormat: { orderArray: Array<TOrderFormat>; count: { [id: string]: number } } =
+                syncIngredientsFormat(order?.ingredients, ingredients);
             setOrderArray(resultFormat.orderArray);
             setCount(resultFormat.count);
         }
@@ -53,7 +54,7 @@ export const FeedDetail: FC = () => {
                         <div className='text text_type_main-medium mt-15'>Состав:</div>
                         <div className={`${styles.ingredientsList} custom-scroll mt-6`}>
                             {orderArray &&
-                                orderArray.map((ingredient: any, index: number) => {
+                                orderArray.map((ingredient: TOrderFormat, index: number) => {
                                     return (
                                         <div
                                             key={index}

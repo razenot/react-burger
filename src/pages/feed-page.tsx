@@ -2,20 +2,24 @@ import { FC, useEffect } from 'react';
 import { FeedListInfo } from '../components/feed-list-info/feed-list-info';
 import { FeedList } from '../components/feed-list/feed-list';
 import { useDispatch, useSelector } from '../services/hooks/redux-hook';
-import { wsConnectionClosed } from '../services/redux/actions/creator/ws';
+import { clearOrders } from '../services/redux/actions/creator/orders';
+import { wsConnectionClose } from '../services/redux/actions/creator/ws';
 import { getWsOrders } from '../services/redux/actions/ws';
 import globalStyles from './../global.module.css';
 
 export const FeedPage: FC = () => {
-    const ordersFull = useSelector((state) => state.ordersReducer);
-    const error = useSelector((state) => state.wsReducer.error);
-
+    const ordersFull = useSelector((state) => state.feedReducer);
+    const { error, wsConnected } = useSelector((state) => state.wsReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getWsOrders());
+        if (!wsConnected) dispatch(getWsOrders());
+    }, [dispatch, wsConnected]);
+
+    useEffect(() => {
         return () => {
-            dispatch(wsConnectionClosed());
+            dispatch(clearOrders());
+            dispatch(wsConnectionClose());
         };
     }, [dispatch]);
 

@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { NotFound404 } from '../../pages';
+import { useSelector } from '../../services/hooks/redux-hook';
 import { TIngredient } from '../../services/utils/types';
 import styles from './ingredient-details.module.css';
 
@@ -10,11 +10,10 @@ interface IIngredientDetailsParams {
 }
 
 const IngredientDetails: FC = () => {
-    // @ts-ignore: Unreachable code error
     const { ingredients } = useSelector((state) => state.ingredientsReducer);
     const { id } = useParams<IIngredientDetailsParams>();
 
-    let data: TIngredient = useMemo(() => {
+    let data: TIngredient | undefined = useMemo(() => {
         return ingredients.find((item: TIngredient) => item._id === id);
     }, [ingredients, id]);
 

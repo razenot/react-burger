@@ -7,11 +7,11 @@ import {
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './style.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../services/redux/auth/action';
+import { userLogin } from '../services/redux/actions/auth';
 import { Loader } from '../ui/loader/loader';
 import { useForm } from '../services/hooks/useForm';
 import { TModalState } from '../services/utils/types';
+import { useDispatch, useSelector } from '../services/hooks/redux-hook';
 
 export const LoginPage: FC = () => {
     const { values, handleChange } = useForm({
@@ -19,11 +19,10 @@ export const LoginPage: FC = () => {
         password: '',
     });
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
     const location = useLocation<TModalState>();
 
     const { authError, authLoading, isAuth, isCheckedUser } = useSelector(
-        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
@@ -68,9 +67,7 @@ export const LoginPage: FC = () => {
                         </div>
                     )}
                     {authError && (
-                        <div
-                            className={`${styles.error} mt-6 text text_type_main-default`}
-                        >
+                        <div className={`${styles.error} mt-6 text text_type_main-default`}>
                             {authError}
                         </div>
                     )}
@@ -88,19 +85,13 @@ export const LoginPage: FC = () => {
                 <div className='mt-20'>
                     <p className='text text_type_main-default text_color_inactive'>
                         <span>Вы — новый пользователь? </span>
-                        <Link<TModalState>
-                            to='/register'
-                            className={styles.link}
-                        >
+                        <Link<TModalState> to='/register' className={styles.link}>
                             Зарегистрироваться
                         </Link>
                     </p>
                     <p className='text text_type_main-default text_color_inactive mt-4'>
                         <span>Забыли пароль? </span>
-                        <Link<TModalState>
-                            to='/forgot-password'
-                            className={styles.link}
-                        >
+                        <Link<TModalState> to='/forgot-password' className={styles.link}>
                             Восстановить пароль
                         </Link>
                     </p>

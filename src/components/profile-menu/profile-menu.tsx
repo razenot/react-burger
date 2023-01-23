@@ -1,17 +1,20 @@
-import { useDispatch } from 'react-redux';
 import { SyntheticEvent, FC } from 'react';
 
-import { NavLink } from 'react-router-dom';
-import { userLogout } from '../../services/redux/auth/action';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from '../../services/hooks/redux-hook';
+import { userLogout } from '../../services/redux/actions/auth';
 import styles from './profile-menu.module.css';
 
 const ProfileMenu: FC = () => {
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     const onLogout = (e: SyntheticEvent<Element, Event>) => {
         e.preventDefault();
         dispatch(userLogout());
     };
+
+    const isOrders: boolean = !!useRouteMatch('/profile/orders');
+    const isProfile: boolean = !!useRouteMatch('/profile') && !isOrders;
 
     return (
         <>
@@ -19,7 +22,7 @@ const ProfileMenu: FC = () => {
                 <li>
                     <NavLink
                         className={`text text_type_main-medium`}
-                        activeClassName={styles.active}
+                        activeClassName={isProfile ? styles.active : ''}
                         to='/profile'
                     >
                         Профиль
@@ -28,17 +31,14 @@ const ProfileMenu: FC = () => {
                 <li>
                     <NavLink
                         className={`text text_type_main-medium`}
-                        activeClassName={styles.active}
+                        activeClassName={isOrders ? styles.active : ''}
                         to='/profile/orders'
                     >
                         История заказов
                     </NavLink>
                 </li>
                 <li>
-                    <div
-                        className={`text text_type_main-medium`}
-                        onClick={onLogout}
-                    >
+                    <div className={`text text_type_main-medium`} onClick={onLogout}>
                         Выход
                     </div>
                 </li>

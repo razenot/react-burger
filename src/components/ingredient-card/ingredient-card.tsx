@@ -1,15 +1,8 @@
 import { FC } from 'react';
-import { DragSourceHookSpec, DragSourceMonitor, useDrag } from 'react-dnd';
-import {
-    CurrencyIcon,
-    Counter,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { DragSourceMonitor, useDrag } from 'react-dnd';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
-import {
-    IIngredientCard,
-    TIngredient,
-    TModalState,
-} from '../../services/utils/types';
+import { IIngredientCard, TModalState } from '../../services/utils/types';
 import styles from './ingredient-card.module.css';
 
 const IngredientCard: FC<IIngredientCard> = ({ ingredient, count }) => {
@@ -33,11 +26,7 @@ const IngredientCard: FC<IIngredientCard> = ({ ingredient, count }) => {
                 }}
                 className={styles.noLink}
             >
-                <div
-                    ref={ref}
-                    style={{ opacity }}
-                    className={styles.wrapper + ' mb-8'}
-                >
+                <div ref={ref} style={{ opacity }} className={styles.wrapper + ' mb-8'}>
                     <div className='pl-4 pr-4'>
                         {count > 0 && <Counter count={count} size='default' />}
                         <img src={ingredient.image} alt={ingredient.name} />
@@ -48,9 +37,7 @@ const IngredientCard: FC<IIngredientCard> = ({ ingredient, count }) => {
                         </span>
                         <CurrencyIcon type='primary' />
                     </div>
-                    <div
-                        className={`${styles.name} text text_type_main-default mt-1`}
-                    >
+                    <div className={`${styles.name} text text_type_main-default mt-1`}>
                         {ingredient.name}
                     </div>
                 </div>

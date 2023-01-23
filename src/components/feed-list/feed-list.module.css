@@ -1,0 +1,6 @@
+.list {
+    height: 776px;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    padding-right: 16px;
+}

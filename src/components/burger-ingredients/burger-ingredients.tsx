@@ -1,17 +1,14 @@
 import { useState, useEffect, useRef, useMemo, FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import { Loader } from '../../ui/loader/loader';
 import styles from './burger-ingredients.module.css';
 import { TIngredient } from '../../services/utils/types';
+import { useSelector } from '../../services/hooks/redux-hook';
 
 const BurgerIngredients: FC = () => {
-    const { ingredients, loading, error } = useSelector(
-        // @ts-ignore: Unreachable code error
-        (state) => state.ingredientsReducer
-    );
+    const { ingredients, loading, error } = useSelector((state) => state.ingredientsReducer);
 
     useEffect(() => {
         if (error) alert(error);
@@ -99,15 +96,10 @@ const BurgerIngredients: FC = () => {
             </div>
             {!loading ? (
                 error ? (
-                    <p className='mt-10 text text_type_main-default'>
-                        Ошибка загрузки данных.
-                    </p>
+                    <p className='mt-10 text text_type_main-default'>Ошибка загрузки данных.</p>
                 ) : (
                     <ul className={`${styles.groupList} custom-scroll mt-10`}>
-                        <li
-                            className={styles.ingredientsGroup}
-                            ref={bunsContainerRef}
-                        >
+                        <li className={styles.ingredientsGroup} ref={bunsContainerRef}>
                             <IngredientsGroup
                                 groupType='buns'
                                 groupName='Булки'
@@ -115,10 +107,7 @@ const BurgerIngredients: FC = () => {
                                 ref={bunsRef}
                             />
                         </li>
-                        <li
-                            className={styles.ingredientsGroup}
-                            ref={saucesContainerRef}
-                        >
+                        <li className={styles.ingredientsGroup} ref={saucesContainerRef}>
                             <IngredientsGroup
                                 groupType='sauces'
                                 groupName='Соусы'
@@ -126,10 +115,7 @@ const BurgerIngredients: FC = () => {
                                 ref={saucesRef}
                             />
                         </li>
-                        <li
-                            className={styles.ingredientsGroup}
-                            ref={mainsContainerRef}
-                        >
+                        <li className={styles.ingredientsGroup} ref={mainsContainerRef}>
                             <IngredientsGroup
                                 groupType='mains'
                                 groupName='Начинка'

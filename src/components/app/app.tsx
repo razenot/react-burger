@@ -12,19 +12,24 @@ import {
     ProfilePage,
     IngredientsPage,
     NotFound404,
+    FeedPage,
+    FeedDetailPage,
+    ProfileOrdersPage,
+    ProfileOrdersDetailPage,
 } from '../../pages';
 import globalStyles from './../../global.module.css';
 import { ProtectedRoute } from '../protected-route/protected-route';
-import { useDispatch } from 'react-redux';
-import { userGet } from '../../services/redux/auth/action';
+import { userGet } from '../../services/redux/actions/auth';
 import { useEffect, FC } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { getIngredients } from '../../services/redux/ingredients/action';
+import { getIngredients } from '../../services/redux/actions/ingredients';
 import { TModalState } from '../../services/utils/types';
+import { useDispatch, useSelector } from '../../services/hooks/redux-hook';
+import { FeedDetail } from '../feed-detail/feed-detail';
 
 const App: FC = () => {
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const location = useLocation<TModalState>();
     const history = useHistory<TModalState>();
     const background = location.state && location.state.background;
@@ -49,9 +54,7 @@ const App: FC = () => {
                         <LoginPage />
                     </Route>
                     <Route path='/' exact={true}>
-                        <h1 className='mt-10 mb-5 text text_type_main-large'>
-                            Соберите бургер
-                        </h1>
+                        <h1 className='mt-10 mb-5 text text_type_main-large'>Соберите бургер</h1>
                         <DndProvider backend={HTML5Backend}>
                             <div className={globalStyles.row}>
                                 <section className={globalStyles.column6}>
@@ -76,11 +79,20 @@ const App: FC = () => {
                     <ProtectedRoute path='/profile' exact={true}>
                         <ProfilePage />
                     </ProtectedRoute>
-                    <ProtectedRoute path='/profile/orders'>
-                        <NotFound404 />
+                    <ProtectedRoute path='/profile/orders' exact={true}>
+                        <ProfileOrdersPage />
+                    </ProtectedRoute>
+                    <ProtectedRoute path='/profile/orders/:id' exact={true}>
+                        <ProfileOrdersDetailPage />
                     </ProtectedRoute>
                     <Route path='/ingredients/:id' exact={true}>
                         <IngredientsPage />
+                    </Route>
+                    <Route path='/feed' exact={true}>
+                        <FeedPage />
+                    </Route>
+                    <Route path='/feed/:id' exact={true}>
+                        <FeedDetailPage />
                     </Route>
                     <Route>
                         <NotFound404 />
@@ -88,17 +100,32 @@ const App: FC = () => {
                 </Switch>
 
                 {background && (
-                    <Route
-                        path='/ingredients/:id'
-                        children={
-                            <Modal
-                                handleClose={handleModalClose}
-                                title='Детали ингредиента'
-                            >
-                                <IngredientDetails />
-                            </Modal>
-                        }
-                    />
+                    <>
+                        <Route
+                            path='/ingredients/:id'
+                            children={
+                                <Modal handleClose={handleModalClose} title='Детали ингредиента'>
+                                    <IngredientDetails />
+                                </Modal>
+                            }
+                        />
+                        <Route
+                            path='/feed/:id'
+                            children={
+                                <Modal handleClose={handleModalClose}>
+                                    <FeedDetail />
+                                </Modal>
+                            }
+                        />
+                        <Route
+                            path='/profile/orders/:id'
+                            children={
+                                <Modal handleClose={handleModalClose}>
+                                    <FeedDetail />
+                                </Modal>
+                            }
+                        />
+                    </>
                 )}
             </main>
         </div>

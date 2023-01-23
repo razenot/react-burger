@@ -11,6 +11,24 @@
     flex-wrap: wrap;
 }
 
+.wrapper {
+    width: 100%;
+}
+
+.justifyContentBetween {
+    justify-content: space-between;
+}
+
+.alignItemsCenter {
+    align-items: center;
+}
+
+.flexBetweenAndCenter {
+    composes: row;
+    composes: justifyContentBetween;
+    composes: alignItemsCenter;
+}
+
 .column {
     display: flex;
     align-items: baseline;

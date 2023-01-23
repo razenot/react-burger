@@ -5,9 +5,9 @@ import {
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, FormEvent, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks/redux-hook';
 import { useForm } from '../../services/hooks/useForm';
-import { userSet } from '../../services/redux/auth/action';
+import { userSet } from '../../services/redux/actions/auth';
 import styles from './profile-edit.module.css';
 
 const ProfileEdit: FC = () => {
@@ -24,19 +24,12 @@ const ProfileEdit: FC = () => {
         setTimeout(() => nameRef.current.focus(), 0);
     };
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
-    const { authError, isAuth, user } = useSelector(
-        // @ts-ignore: Unreachable code error
-        (state) => state.authReducer
-    );
+    const { authError, isAuth, user } = useSelector((state) => state.authReducer);
 
     const isDisabledButton: () => boolean = () => {
-        return (
-            user.name === values.name &&
-            user.email === values.email &&
-            !values.password
-        );
+        return user?.name === values.name && user?.email === values.email && !values.password;
     };
 
     useEffect(() => {
@@ -51,15 +44,13 @@ const ProfileEdit: FC = () => {
     };
 
     const onClearData = () => {
-        setValues({ name: user.name, email: user.email, password: '' });
+        if (user) setValues({ name: user.name, email: user.email, password: '' });
     };
 
     return (
         <>
             {authError ? (
-                <div
-                    className={`${styles.error} mt-6 text text_type_main-default`}
-                >
+                <div className={`${styles.error} mt-6 text text_type_main-default`}>
                     {authError}
                 </div>
             ) : (

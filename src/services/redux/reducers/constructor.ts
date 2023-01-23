@@ -1,16 +1,26 @@
+import { TIngredient } from '../../utils/types';
+import { TConstructorActions } from '../actions/creator/constructor';
 import {
     CONSTRUCTOR_ADD,
     CONSTRUCTOR_REMOVE,
     CONSTRUCTOR_REBUILD,
     CONSTRUCTOR_RESET,
-} from './action';
+} from '../constants/constructor';
 
-const initialState = {
+type TConstructorState = {
+    readonly ingredients: ReadonlyArray<TIngredient>;
+    readonly bun: TIngredient | null;
+};
+
+const initialState: TConstructorState = {
     ingredients: [],
     bun: null,
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+    state = initialState,
+    action: TConstructorActions
+): TConstructorState => {
     switch (action.type) {
         case CONSTRUCTOR_ADD: {
             if (action.payload.type === 'bun') {
@@ -28,11 +38,7 @@ export const constructorReducer = (state = initialState, action) => {
         case CONSTRUCTOR_REMOVE: {
             return {
                 ...state,
-                ingredients: [
-                    ...state.ingredients.filter(
-                        (item) => item.id != action.payload
-                    ),
-                ],
+                ingredients: [...state.ingredients.filter((item) => item.id !== action.payload)],
             };
         }
         case CONSTRUCTOR_REBUILD: {

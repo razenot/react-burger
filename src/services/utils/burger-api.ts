@@ -87,11 +87,7 @@ export const requestLogin = (email: string, password: string) => {
     return request(`${BURGER_API_URL}/auth/login`, data);
 };
 
-export const requestRegister = (
-    email: string,
-    password: string,
-    name: string
-) => {
+export const requestRegister = (email: string, password: string, name: string) => {
     const data = {
         method: 'POST',
         headers: {
@@ -127,11 +123,7 @@ export const requestGetUser = () => {
     return requestWithRefresh(`${BURGER_API_URL}/auth/user`, data);
 };
 
-export const requestSetUser = (
-    email: string,
-    password: string,
-    name: string
-) => {
+export const requestSetUser = (email: string, password: string, name: string) => {
     const data = {
         method: 'PATCH',
         headers: {

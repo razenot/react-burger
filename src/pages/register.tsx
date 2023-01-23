@@ -7,11 +7,11 @@ import {
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './style.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { userRegister } from '../services/redux/auth/action';
+import { userRegister } from '../services/redux/actions/auth';
 import { Loader } from '../ui/loader/loader';
 import { useForm } from '../services/hooks/useForm';
 import { TModalState } from '../services/utils/types';
+import { useDispatch, useSelector } from '../services/hooks/redux-hook';
 
 export const RegisterPage: FC = () => {
     const { values, handleChange } = useForm({
@@ -20,11 +20,10 @@ export const RegisterPage: FC = () => {
         password: '',
     });
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
     const location = useLocation<TModalState>();
 
     const { authError, authLoading, isAuth, isCheckedUser } = useSelector(
-        // @ts-ignore: Unreachable code error
         (state) => state.authReducer
     );
 
@@ -79,9 +78,7 @@ export const RegisterPage: FC = () => {
                         </div>
                     )}
                     {authError && (
-                        <div
-                            className={`${styles.error} mt-6 text text_type_main-default`}
-                        >
+                        <div className={`${styles.error} mt-6 text text_type_main-default`}>
                             {authError}
                         </div>
                     )}
@@ -90,11 +87,7 @@ export const RegisterPage: FC = () => {
                             htmlType='submit'
                             type='primary'
                             size='medium'
-                            disabled={
-                                !values.email ||
-                                !values.password ||
-                                !values.name
-                            }
+                            disabled={!values.email || !values.password || !values.name}
                         >
                             Зарегистрироваться
                         </Button>

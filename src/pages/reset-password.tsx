@@ -1,17 +1,13 @@
 import { FC, FormEvent } from 'react';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import {
-    PasswordInput,
-    Input,
-    Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { requestResetPassword } from '../services/utils/burger-api';
 import { Loader } from '../ui/loader/loader';
-import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_RESET_PASSWORD_SUCCESS } from '../services/redux/auth/action';
+import { resetPasswordCreator } from '../services/redux/actions/creator/auth';
 import { useForm } from '../services/hooks/useForm';
 import styles from './style.module.css';
 import { TModalState } from '../services/utils/types';
+import { useDispatch, useSelector } from '../services/hooks/redux-hook';
 
 export const ResetPasswordPage: FC = () => {
     const { values, handleChange } = useForm({
@@ -21,20 +17,16 @@ export const ResetPasswordPage: FC = () => {
 
     const history = useHistory<TModalState>();
     const location = useLocation<TModalState>();
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
-    const { isAuth, isCheckedUser, isResetPassword } = useSelector(
-        // @ts-ignore: Unreachable code error
-        (state) => state.authReducer
-    );
+    const { isAuth, isCheckedUser, isResetPassword } = useSelector((state) => state.authReducer);
 
     if (localStorage.getItem('accessToken')) {
         if (!isCheckedUser) {
             return <Loader size='large' />;
         }
     } else {
-        if (!isResetPassword)
-            return <Redirect to={location.state?.from || '/login'} />;
+        if (!isResetPassword) return <Redirect to={location.state?.from || '/login'} />;
     }
 
     if (isAuth) {
@@ -45,9 +37,7 @@ export const ResetPasswordPage: FC = () => {
         e.preventDefault();
         requestResetPassword(values.password, values.code)
             .then(() => {
-                dispatch({
-                    type: AUTH_RESET_PASSWORD_SUCCESS,
-                });
+                dispatch(resetPasswordCreator());
                 history.push({ pathname: '/login' });
             })
             .catch((e) => {
@@ -58,9 +48,7 @@ export const ResetPasswordPage: FC = () => {
     return (
         <div className={styles.authenticationPage}>
             <div className={styles.container}>
-                <div className='text text_type_main-medium'>
-                    Восстановление пароля
-                </div>
+                <div className='text text_type_main-medium'>Восстановление пароля</div>
                 <form onSubmit={onSubmit}>
                     <div className='mt-6'>
                         <PasswordInput

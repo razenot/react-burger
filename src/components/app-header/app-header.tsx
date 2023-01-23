@@ -12,24 +12,16 @@ import { TModalState } from '../../services/utils/types';
 
 const AppHeader: FC = () => {
     const isConstructor: boolean = !!useRouteMatch({ path: '/', exact: true });
-    const isFeed: boolean = !!useRouteMatch('/profile/orders');
+    const isFeed: boolean = !!useRouteMatch('/feed');
     const isProfile: boolean = !!useRouteMatch('/profile') && !isFeed;
 
     return (
         <div className={styles.headerWrapper}>
-            <div
-                className={`${globalStyles.container} ${globalStyles.blackGrayBG}`}
-            >
+            <div className={`${globalStyles.container} ${globalStyles.blackGrayBG}`}>
                 <header className={styles.header}>
                     <section className={styles.columnLeft}>
-                        <div
-                            className={`${styles.link} ${
-                                isConstructor ? styles.active : ''
-                            }`}
-                        >
-                            <BurgerIcon
-                                type={isConstructor ? 'primary' : 'secondary'}
-                            />
+                        <div className={`${styles.link} ${isConstructor ? styles.active : ''}`}>
+                            <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
                             <Link<TModalState>
                                 to='/'
                                 className='text text_type_main-default text_color_inactive ml-2'
@@ -37,14 +29,10 @@ const AppHeader: FC = () => {
                                 Конструктор
                             </Link>
                         </div>
-                        <div
-                            className={`ml-2 ${styles.link} ${
-                                isFeed ? styles.active : ''
-                            }`}
-                        >
+                        <div className={`ml-2 ${styles.link} ${isFeed ? styles.active : ''}`}>
                             <ListIcon type={isFeed ? 'primary' : 'secondary'} />
                             <Link<TModalState>
-                                to='/profile/orders'
+                                to='/feed'
                                 className='text text_type_main-default text_color_inactive ml-2'
                             >
                                 Лента заказов
@@ -57,16 +45,10 @@ const AppHeader: FC = () => {
                         </Link>
                     </section>
                     <section className={styles.columnRight}>
-                        <div
-                            className={`${styles.link} ${
-                                isProfile ? styles.active : ''
-                            }`}
-                        >
-                            <ProfileIcon
-                                type={isProfile ? 'primary' : 'secondary'}
-                            />
+                        <div className={`${styles.link} ${isProfile ? styles.active : ''}`}>
+                            <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
                             <Link<TModalState>
-                                to='/profile'
+                                to='/profile/orders'
                                 className='text text_type_main-default text_color_inactive ml-2'
                             >
                                 Личный кабинет

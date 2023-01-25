@@ -32,6 +32,8 @@
         "web-vitals": "2.1.4"
     },
     "scripts": {
+        "deploy": "gh-pages -d build",
+        "deploy-server": "npm run build && scp -r ./build/* razenot@84.201.153.7:/home/razenot/stellar-frontend",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -58,6 +60,7 @@
     "devDependencies": {
         "@types/react-router-dom": "^5.3.3",
         "eslint-config-prettier": "^8.5.0",
+        "gh-pages": "^5.0.0",
         "prettier": "2.7.1"
     }
 }

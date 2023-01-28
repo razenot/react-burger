@@ -6,7 +6,7 @@ export const sendOrder: AppThunk = (ingredients: Array<string>) => (dispatch: Ap
     dispatch(orderRequestCreator());
     return fetchOrder(ingredients)
         .then((orderFields) => {
-            dispatch(orderSuccessCreator(orderFields.order));
+            dispatch(orderSuccessCreator(orderFields.order.number));
         })
         .catch((e) => {
             dispatch(orderFailCreator(e.message));

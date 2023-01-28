@@ -24,7 +24,7 @@ const BurgerConstructor: FC = () => {
 
     const { isAuth } = useSelector((state) => state.authReducer);
 
-    const { orderFields, loading, error } = useSelector((state) => state.orderReducer);
+    const { orderNumber, loading, error } = useSelector((state) => state.orderReducer);
 
     const { ingredients, bun } = useSelector((state) => state.constructorReducer);
 
@@ -176,11 +176,8 @@ const BurgerConstructor: FC = () => {
                         <Loader size='large' />
                     )}
 
-                    {visibleOrderDetail && orderFields?.number && (
-                        <OrderDetails
-                            handleClose={handleCloseOrderDetail}
-                            orderId={orderFields?.number}
-                        />
+                    {visibleOrderDetail && orderNumber && (
+                        <OrderDetails handleClose={handleCloseOrderDetail} orderId={orderNumber} />
                     )}
                 </>
             )}

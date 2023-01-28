@@ -4,7 +4,6 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSE,
     WS_CONNECTION_CLOSED,
-    WS_GET_MESSAGE,
 } from '../../constants/ws';
 
 type TWsConnectionStartAction = {
@@ -29,18 +28,13 @@ type TWsConnectionClosedAction = {
     readonly type: typeof WS_CONNECTION_CLOSED;
 };
 
-type TWsGetMessageAction = {
-    readonly type: typeof WS_GET_MESSAGE;
-    payload: string;
-};
-
 export type TWebsocketActions =
     | TWsConnectionStartAction
     | TWsConnectionSuccessAction
     | TWsConnectionErrorAction
     | TWsConnectionCloseAction
-    | TWsConnectionClosedAction
-    | TWsGetMessageAction;
+    | TWsConnectionClosedAction;
+// | TWsGetMessageAction;
 
 export const wsConnectionStart = (url: string): TWsConnectionStartAction => {
     return {
@@ -71,12 +65,5 @@ export const wsConnectionClose = (): TWsConnectionCloseAction => {
 export const wsConnectionClosed = (): TWsConnectionClosedAction => {
     return {
         type: WS_CONNECTION_CLOSED,
-    };
-};
-
-export const wsGetMessage = (message: string): TWsGetMessageAction => {
-    return {
-        type: WS_GET_MESSAGE,
-        payload: message,
     };
 };

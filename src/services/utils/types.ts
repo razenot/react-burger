@@ -89,18 +89,6 @@ export type TOwner = {
     updatedAt: string;
 };
 
-export type TOrderResponse = {
-    createdAt: string;
-    ingredients: Array<TIngredient>;
-    name: string;
-    number: number;
-    owner: TOwner;
-    price: number;
-    status: string;
-    updatedAt: string;
-    _id: string;
-};
-
 export type TServerOrders = {
     orders: Array<TFeedOrder>;
     total: number;

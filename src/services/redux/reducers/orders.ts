@@ -9,7 +9,7 @@ export type TOrdersState = {
     orders: Array<TFeedOrder>;
 };
 
-const initialState: TOrdersState = {
+export const initialState: TOrdersState = {
     loading: false,
     total: 0,
     todayTotal: 0,

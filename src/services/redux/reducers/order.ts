@@ -1,4 +1,3 @@
-import { TOrderResponse } from '../../utils/types';
 import { TOrderActions } from '../actions/creator/order';
 import {
     SEND_ORDER_REQUEST,
@@ -8,13 +7,13 @@ import {
 } from '../constants/order';
 
 export type TOrderState = {
-    orderFields: TOrderResponse | null;
+    orderNumber: number | null;
     loading: boolean;
     error: string | boolean;
 };
 
-const initialState: TOrderState = {
-    orderFields: null,
+export const initialState: TOrderState = {
+    orderNumber: null,
     loading: false,
     error: false,
 };
@@ -31,7 +30,7 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
         case SEND_ORDER_SUCCESS: {
             return {
                 ...state,
-                orderFields: action.payload,
+                orderNumber: action.payload,
                 loading: false,
                 error: false,
             };

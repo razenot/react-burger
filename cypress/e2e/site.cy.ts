@@ -1,3 +1,17 @@
+import { BURGER_API_URL } from './../../src/services/utils/burger-api';
+
+const BUN_INGREDIENT = '[data-test-id=buns_group] [data-test-id=any_ingredient]';
+const SOUSE_INGREDIENT = '[data-test-id=sauces_group] [data-test-id=any_ingredient]';
+const MAINS_INGREDIENT = '[data-test-id=mains_group] [data-test-id=any_ingredient]';
+const MODAL = '[data-test-id=modal]';
+const CLOSE_MODAL = '[data-test-id=close_modal]';
+const CALORIES = '[data-test-id=ingredient_detail_calories]';
+const PROTEINS = '[data-test-id=ingredient_detail_proteins]';
+const FAT = '[data-test-id=ingredient_detail_fat]';
+const DETAIL_NAME = '[data-test-id=ingredient_detail_name]';
+const CARBOHYDRATES = '[data-test-id=ingredient_detail_carbohydrates]';
+const INGREDIENT_NAME = '[data-test-id=ingredient_name]';
+
 describe('burgers spec', () => {
     before(() => {
         cy.visit('/');
@@ -5,7 +19,7 @@ describe('burgers spec', () => {
     });
 
     beforeEach(() => {
-        cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+        cy.intercept('GET', `${BURGER_API_URL}/ingredients`, {
             fixture: 'ingredients.json',
         });
     });
@@ -13,112 +27,65 @@ describe('burgers spec', () => {
     it('should open ingredient modal', () => {
         cy.visit('/');
         //buns
-        cy.get('[data-test-id=buns_group] [data-test-id=any_ingredient]').first().click();
-        cy.get('[data-test-id=modal]').as('modal');
-        cy.get('[data-test-id=close_modal]').as('closeModal');
-        cy.get('@modal').contains('Детали ингредиента').should('exist');
-        cy.get('@modal')
+        cy.get(BUN_INGREDIENT).first().click();
+        cy.get(MODAL).contains('Детали ингредиента').should('exist');
+        cy.get(MODAL)
             .find('img')
             .should('have.attr', 'src', 'https://code.s3.yandex.net/react/code/bun-02-large.png')
             .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_name]')
-            .contains('Краторная булка N-200i')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_calories]')
-            .contains('420')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_proteins]')
-            .contains('80')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_fat]')
-            .contains('24')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_carbohydrates]')
-            .contains('53')
-            .should('exist');
-        cy.get('@closeModal').click();
+        cy.get(MODAL).find(DETAIL_NAME).contains('Краторная булка N-200i').should('exist');
+        cy.get(MODAL).find(CALORIES).contains('420').should('exist');
+        cy.get(MODAL).find(PROTEINS).contains('80').should('exist');
+        cy.get(MODAL).find(FAT).contains('24').should('exist');
+        cy.get(MODAL).find(CARBOHYDRATES).contains('53').should('exist');
+        cy.get(CLOSE_MODAL).click();
         cy.contains('Детали ингредиента').should('not.exist');
 
         //sauces
-        cy.get('[data-test-id=sauces_group] [data-test-id=any_ingredient]').first().click();
-        cy.get('[data-test-id=modal]').as('modal');
-        cy.get('[data-test-id=close_modal]').as('closeModal');
-        cy.get('@modal').contains('Детали ингредиента').should('exist');
-        cy.get('@modal')
+        cy.get(SOUSE_INGREDIENT).first().click();
+        cy.get(MODAL).contains('Детали ингредиента').should('exist');
+        cy.get(MODAL)
             .find('img')
             .should('have.attr', 'src', 'https://code.s3.yandex.net/react/code/sauce-02-large.png');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_name]')
-            .contains('Соус Spicy-X')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_calories]')
-            .contains('30')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_proteins]')
-            .contains('30')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_fat]')
-            .contains('20')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_carbohydrates]')
-            .contains('40')
-            .should('exist');
-        cy.get('@closeModal').click();
+        cy.get(MODAL).find(DETAIL_NAME).contains('Соус Spicy-X').should('exist');
+        cy.get(MODAL).find(CALORIES).contains('30').should('exist');
+        cy.get(MODAL).find(PROTEINS).contains('30').should('exist');
+        cy.get(MODAL).find(FAT).contains('20').should('exist');
+        cy.get(MODAL).find(CARBOHYDRATES).contains('40').should('exist');
+        cy.get(CLOSE_MODAL).click();
         cy.contains('Детали ингредиента').should('not.exist');
 
         //mains
-        cy.get('[data-test-id=mains_group] [data-test-id=any_ingredient]').first().click();
-        cy.get('[data-test-id=modal]').as('modal');
-        cy.get('[data-test-id=close_modal]').as('closeModal');
-        cy.get('@modal').contains('Детали ингредиента').should('exist');
-        cy.get('@modal')
+        cy.get(MAINS_INGREDIENT).first().click();
+        cy.get(MODAL).contains('Детали ингредиента').should('exist');
+        cy.get(MODAL)
             .find('img')
             .should('have.attr', 'src', 'https://code.s3.yandex.net/react/code/meat-03-large.png')
             .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_name]')
+        cy.get(MODAL)
+            .find(DETAIL_NAME)
             .contains('Филе Люминесцентного тетраодонтимформа')
             .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_calories]')
-            .contains('643')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_proteins]')
-            .contains('44')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_fat]')
-            .contains('26')
-            .should('exist');
-        cy.get('@modal')
-            .find('[data-test-id=ingredient_detail_carbohydrates]')
-            .contains('85')
-            .should('exist');
-        cy.get('@closeModal').click();
+        cy.get(MODAL).find(CALORIES).contains('643').should('exist');
+        cy.get(MODAL).find(PROTEINS).contains('44').should('exist');
+        cy.get(MODAL).find(FAT).contains('26').should('exist');
+        cy.get(MODAL).find(CARBOHYDRATES).contains('85').should('exist');
+        cy.get(CLOSE_MODAL).click();
         cy.contains('Детали ингредиента').should('not.exist');
     });
 
     it('should add ingredients to constructor using dnd', () => {
         cy.visit('/');
-        cy.get('[data-test-id=buns_group] [data-test-id=any_ingredient]').first().as('bun');
-        cy.get('[data-test-id=buns_group] [data-test-id=any_ingredient]').last().as('bun2');
-        cy.get('[data-test-id=sauces_group] [data-test-id=any_ingredient]').first().as('souse');
-        cy.get('[data-test-id=mains_group] [data-test-id=any_ingredient]').first().as('main');
+
+        cy.get(BUN_INGREDIENT).first().as('bun');
+        cy.get(BUN_INGREDIENT).last().as('bun2');
+        cy.get(SOUSE_INGREDIENT).first().as('souse');
+        cy.get(MAINS_INGREDIENT).first().as('main');
         cy.get('[data-test-id=constructor_buns]').as('constructorBuns');
         cy.get('[data-test-id=constructor_ingredients]').as('constructorIngredients');
 
         cy.get('@bun')
-            .find('[data-test-id=ingredient_name]')
+            .find(INGREDIENT_NAME)
             .then(($nameBun) => {
                 cy.get('@bun').trigger('dragstart');
                 cy.get('@constructorBuns').trigger('drop');
@@ -126,7 +93,7 @@ describe('burgers spec', () => {
             });
 
         cy.get('@souse')
-            .find('[data-test-id=ingredient_name]')
+            .find(INGREDIENT_NAME)
             .then(($nameSouse) => {
                 cy.get('@souse').trigger('dragstart');
                 cy.get('@constructorIngredients').trigger('drop');
@@ -134,7 +101,7 @@ describe('burgers spec', () => {
             });
 
         cy.get('@main')
-            .find('[data-test-id=ingredient_name]')
+            .find(INGREDIENT_NAME)
             .then(($nameMain) => {
                 cy.get('@main').trigger('dragstart');
                 cy.get('@constructorIngredients').trigger('drop');
@@ -142,7 +109,7 @@ describe('burgers spec', () => {
             });
 
         cy.get('@bun2')
-            .find('[data-test-id=ingredient_name]')
+            .find(INGREDIENT_NAME)
             .then(($nameBun2) => {
                 cy.get('@bun2').trigger('dragstart');
                 cy.get('@constructorBuns').trigger('drop');
@@ -151,7 +118,7 @@ describe('burgers spec', () => {
 
         // not exist
         cy.get('@bun')
-            .find('[data-test-id=ingredient_name]')
+            .find(INGREDIENT_NAME)
             .then(($nameBun) => {
                 cy.get('@bun').trigger('dragstart');
                 cy.get('@constructorIngredients').trigger('drop');
@@ -159,7 +126,7 @@ describe('burgers spec', () => {
             });
 
         cy.get('@main')
-            .find('[data-test-id=ingredient_name]')
+            .find(INGREDIENT_NAME)
             .then(($nameMain) => {
                 cy.get('@main').trigger('dragstart');
                 cy.get('@constructorBuns').trigger('drop');
@@ -170,18 +137,18 @@ describe('burgers spec', () => {
     it('should process order with auth', () => {
         cy.visit('/');
 
-        cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+        cy.intercept('POST', `${BURGER_API_URL}/orders`, {
             fixture: 'order.json',
         }).as('postOrder');
 
-        cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/login', {
+        cy.intercept('POST', `${BURGER_API_URL}/auth/login`, {
             fixture: 'user.json',
         });
 
         // drop ingredients in constructor
-        cy.get('[data-test-id=buns_group] [data-test-id=any_ingredient]').first().as('bun');
-        cy.get('[data-test-id=sauces_group] [data-test-id=any_ingredient]').first().as('souse');
-        cy.get('[data-test-id=mains_group] [data-test-id=any_ingredient]').first().as('main');
+        cy.get(BUN_INGREDIENT).first().as('bun');
+        cy.get(SOUSE_INGREDIENT).first().as('souse');
+        cy.get(MAINS_INGREDIENT).first().as('main');
         cy.get('[data-test-id=constructor_buns]').as('constructorBuns');
         cy.get('[data-test-id=constructor_ingredients]').as('constructorIngredients');
 
@@ -212,8 +179,8 @@ describe('burgers spec', () => {
         cy.get('[data-test-id=order_submit]').click();
         cy.wait('@postOrder');
 
-        cy.get('[data-test-id=modal]').contains('123').should('exist');
-        cy.get('[data-test-id=close_modal]').click();
+        cy.get(MODAL).contains('123').should('exist');
+        cy.get(CLOSE_MODAL).click();
         cy.contains('идентификатор заказа').should('not.exist');
     });
 });

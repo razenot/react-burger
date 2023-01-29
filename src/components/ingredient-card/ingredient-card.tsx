@@ -26,7 +26,12 @@ const IngredientCard: FC<IIngredientCard> = ({ ingredient, count }) => {
                 }}
                 className={styles.noLink}
             >
-                <div ref={ref} style={{ opacity }} className={styles.wrapper + ' mb-8'}>
+                <div
+                    ref={ref}
+                    style={{ opacity }}
+                    className={styles.wrapper + ' mb-8'}
+                    data-test-id='any_ingredient'
+                >
                     <div className='pl-4 pr-4'>
                         {count > 0 && <Counter count={count} size='default' />}
                         <img src={ingredient.image} alt={ingredient.name} />
@@ -37,7 +42,10 @@ const IngredientCard: FC<IIngredientCard> = ({ ingredient, count }) => {
                         </span>
                         <CurrencyIcon type='primary' />
                     </div>
-                    <div className={`${styles.name} text text_type_main-default mt-1`}>
+                    <div
+                        className={`${styles.name} text text_type_main-default mt-1`}
+                        data-test-id='ingredient_name'
+                    >
                         {ingredient.name}
                     </div>
                 </div>

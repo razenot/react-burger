@@ -93,7 +93,11 @@ const BurgerConstructor: FC = () => {
                 <>
                     <div className={styles.elementsWrapper}>
                         <div className='pl-4 pr-4'>
-                            <div className={`${styles.elementContainer}`} ref={dropBunTarget}>
+                            <div
+                                className={`${styles.elementContainer}`}
+                                ref={dropBunTarget}
+                                data-test-id='constructor_buns'
+                            >
                                 <div className={styles.ingredient}>
                                     {!bun ? (
                                         <div
@@ -117,6 +121,7 @@ const BurgerConstructor: FC = () => {
                         <div
                             className={`${styles.scrollable} custom-scroll pl-4 pr-4`}
                             ref={dropIngredientTarget}
+                            data-test-id='constructor_ingredients'
                         >
                             {!ingredients.length ? (
                                 <div className={styles.elementContainer}>
@@ -162,15 +167,17 @@ const BurgerConstructor: FC = () => {
                             <span className={`${styles.currencyIcon} mr-10`}>
                                 <CurrencyIcon type='primary' />
                             </span>
-                            <Button
-                                htmlType='button'
-                                type='primary'
-                                size='large'
-                                disabled={!ingredients.length || !bun}
-                                onClick={handleCreateOrder}
-                            >
-                                Оформить заказ
-                            </Button>
+                            <span data-test-id='order_submit'>
+                                <Button
+                                    htmlType='button'
+                                    type='primary'
+                                    size='large'
+                                    disabled={!ingredients.length || !bun}
+                                    onClick={handleCreateOrder}
+                                >
+                                    Оформить заказ
+                                </Button>
+                            </span>
                         </div>
                     ) : (
                         <Loader size='large' />

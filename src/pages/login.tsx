@@ -46,7 +46,7 @@ export const LoginPage: FC = () => {
             <div className={styles.container}>
                 <div className='text text_type_main-medium'>Вход</div>
                 <form onSubmit={onSubmit}>
-                    <div className='mt-6'>
+                    <div className='mt-6' data-test-id='email_input'>
                         <EmailInput
                             onChange={handleChange}
                             value={values.email}
@@ -54,7 +54,7 @@ export const LoginPage: FC = () => {
                             name={'email'}
                         />
                     </div>
-                    <div className='mt-6'>
+                    <div className='mt-6' data-test-id='password_input'>
                         <PasswordInput
                             onChange={handleChange}
                             value={values.password}
@@ -71,7 +71,7 @@ export const LoginPage: FC = () => {
                             {authError}
                         </div>
                     )}
-                    <div className='mt-6'>
+                    <div className='mt-6' data-test-id='auth_submit'>
                         <Button
                             htmlType='submit'
                             type='primary'

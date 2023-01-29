@@ -32,6 +32,7 @@
         "web-vitals": "2.1.4"
     },
     "scripts": {
+        "predeploy": "npm run build",
         "deploy": "gh-pages -d build",
         "deploy-server": "npm run build && scp -r ./build/* razenot@84.201.153.7:/home/razenot/stellar-frontend",
         "start": "react-scripts start",

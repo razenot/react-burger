@@ -2,7 +2,10 @@
 
 Yandex practicum training project designed to learn React.
 
-Link to working project: https://razenot.students.nomoredomains.rocks
+Link to working project:
+
+1. https://razenot.students.nomoredomains.rocks
+2. https://razenot.github.io/react-burger/
 
 # Getting Started with Create React App
 

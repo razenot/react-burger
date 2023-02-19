@@ -99,7 +99,11 @@ const BurgerIngredients: FC = () => {
                     <p className='mt-10 text text_type_main-default'>Ошибка загрузки данных.</p>
                 ) : (
                     <ul className={`${styles.groupList} custom-scroll mt-10`}>
-                        <li className={styles.ingredientsGroup} ref={bunsContainerRef}>
+                        <li
+                            className={styles.ingredientsGroup}
+                            ref={bunsContainerRef}
+                            data-test-id='buns_group'
+                        >
                             <IngredientsGroup
                                 groupType='buns'
                                 groupName='Булки'
@@ -107,7 +111,11 @@ const BurgerIngredients: FC = () => {
                                 ref={bunsRef}
                             />
                         </li>
-                        <li className={styles.ingredientsGroup} ref={saucesContainerRef}>
+                        <li
+                            className={styles.ingredientsGroup}
+                            ref={saucesContainerRef}
+                            data-test-id='sauces_group'
+                        >
                             <IngredientsGroup
                                 groupType='sauces'
                                 groupName='Соусы'
@@ -115,7 +123,11 @@ const BurgerIngredients: FC = () => {
                                 ref={saucesRef}
                             />
                         </li>
-                        <li className={styles.ingredientsGroup} ref={mainsContainerRef}>
+                        <li
+                            className={styles.ingredientsGroup}
+                            ref={mainsContainerRef}
+                            data-test-id='mains_group'
+                        >
                             <IngredientsGroup
                                 groupType='mains'
                                 groupName='Начинка'

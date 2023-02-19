@@ -26,10 +26,14 @@ const Modal: FC<TModal> = ({ handleClose, title, children }) => {
         ReactDOM.createPortal(
             <div className={styles.root}>
                 <ModalOverlay handleClose={handleClose} />
-                <div className={styles.content}>
+                <div className={styles.content} data-test-id='modal'>
                     <div className={styles.header}>
                         {title && <p className='text text_type_main-large'>{title}</p>}
-                        <div className={styles.close} onClick={handleClose}>
+                        <div
+                            className={styles.close}
+                            onClick={handleClose}
+                            data-test-id='close_modal'
+                        >
                             <CloseIcon type='primary' />
                         </div>
                     </div>

@@ -24,7 +24,7 @@ type TAuthState = {
     readonly isResetPassword: boolean;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
     user: null,
     isAuth: false,
     authLoading: false,

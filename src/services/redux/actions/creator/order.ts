@@ -1,4 +1,3 @@
-import { TOrderResponse } from '../../../utils/types';
 import {
     SEND_ORDER_REQUEST,
     SEND_ORDER_SUCCESS,
@@ -12,7 +11,7 @@ interface IOrderRequestAction {
 
 interface IOrderSuccessAction {
     readonly type: typeof SEND_ORDER_SUCCESS;
-    readonly payload: TOrderResponse;
+    readonly payload: number | null;
 }
 
 interface IOrderFailAction {
@@ -34,9 +33,9 @@ export const orderRequestCreator = (): IOrderRequestAction => ({
     type: SEND_ORDER_REQUEST,
 });
 
-export const orderSuccessCreator = (data: TOrderResponse): IOrderSuccessAction => ({
+export const orderSuccessCreator = (number: number | null): IOrderSuccessAction => ({
     type: SEND_ORDER_SUCCESS,
-    payload: data,
+    payload: number,
 });
 
 export const orderFailCreator = (error: string): IOrderFailAction => ({

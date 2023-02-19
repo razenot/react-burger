@@ -31,13 +31,21 @@ const IngredientDetails: FC = () => {
                 <div className='pl-4 pr-4'>
                     <img src={data.image_large} alt={data.name} />
                 </div>
-                <p className='text text_type_main-medium mt-4'>{data.name}</p>
+                <p
+                    className='text text_type_main-medium mt-4'
+                    data-test-id='ingredient_detail_name'
+                >
+                    {data.name}
+                </p>
                 <ul className={`${styles.nutrition} mt-8`}>
                     <li className='pl-5'>
                         <span className='text text_type_main-default text_color_inactive'>
                             Калории,ккал
                         </span>
-                        <span className='text text_type_digits-medium text_color_inactive mt-2'>
+                        <span
+                            className='text text_type_digits-medium text_color_inactive mt-2'
+                            data-test-id='ingredient_detail_calories'
+                        >
                             {data.calories}
                         </span>
                     </li>
@@ -45,7 +53,10 @@ const IngredientDetails: FC = () => {
                         <span className='text text_type_main-default text_color_inactive'>
                             Белки, г
                         </span>
-                        <span className='text text_type_digits-medium text_color_inactive mt-2'>
+                        <span
+                            className='text text_type_digits-medium text_color_inactive mt-2'
+                            data-test-id='ingredient_detail_proteins'
+                        >
                             {data.proteins}
                         </span>
                     </li>
@@ -53,7 +64,10 @@ const IngredientDetails: FC = () => {
                         <span className='text text_type_main-default text_color_inactive'>
                             Жиры, г
                         </span>
-                        <span className='text text_type_digits-medium text_color_inactive mt-2'>
+                        <span
+                            className='text text_type_digits-medium text_color_inactive mt-2'
+                            data-test-id='ingredient_detail_fat'
+                        >
                             {data.fat}
                         </span>
                     </li>
@@ -61,7 +75,10 @@ const IngredientDetails: FC = () => {
                         <span className='text text_type_main-default text_color_inactive'>
                             Углеводы, г
                         </span>
-                        <span className='text text_type_digits-medium text_color_inactive mt-2'>
+                        <span
+                            className='text text_type_digits-medium text_color_inactive mt-2'
+                            data-test-id='ingredient_detail_carbohydrates'
+                        >
                             {data.carbohydrates}
                         </span>
                     </li>

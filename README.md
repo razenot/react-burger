@@ -1,3 +1,12 @@
+# About
+
+Yandex practicum training project designed to learn React.
+
+Link to working project:
+
+1. https://razenot.students.nomoredomains.rocks
+2. https://razenot.github.io/react-burger/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
